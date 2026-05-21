@@ -1,0 +1,38 @@
+.consultar, .prod, .cont {
+  background-color: #cde4f4;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid rgb(102, 102, 102, 0.4);
+  box-shadow: 3px 3px 3px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  color: #a26eaf;
+  cursor: pointer;
+  transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+.consultar:hover, .prod:hover, .cont:hover {
+  transform: scale(1.04);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+.consultar {
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.0625rem;
+  padding: 0.625rem 0px;
+  width: 10.625rem;
+}
+.prod {
+  font-size: 0.7rem;
+  line-height: 1.2rem;
+  letter-spacing: 0rem;
+  padding: 0.5rem 0px;
+  cursor: pointer;
+  width: 8rem;
+}
+.cont {
+  font-size: 0.7rem;
+  line-height: 1.2rem;
+  letter-spacing: 0rem;
+  padding: 0rem 1rem;
+  cursor: pointer;
+ /* width: 2rem;*/
+}

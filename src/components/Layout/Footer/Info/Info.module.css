@@ -1,0 +1,36 @@
+.pieInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.875rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #696868;
+}
+.pieInfo h4 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.pieInfo img {
+  filter: contrast(30%);
+}
+.pieInfoWp,
+.pieInfoCorreo,
+.pieInfoDireccion {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+.pieInfoCorreo img {
+  height: 1.875rem;
+}
+.pieInfoCorreo1 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.94rem;
+}
+.pieInfoCorreo1 a {
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #696868;
+}

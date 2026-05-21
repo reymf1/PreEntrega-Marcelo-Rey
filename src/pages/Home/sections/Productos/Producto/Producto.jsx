@@ -1,0 +1,70 @@
+import styles from "./Producto.module.css";
+import { Boton } from "../../../../../components/Boton/Boton";
+import { useState } from "react";
+import { FaStar } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
+
+export function Producto({ id, img, nombre, precio, stock, descripcion }) {
+  const [cantidad, setCantidad] = useState(0);
+  const incrementar = () => {
+    if (cantidad < stock) {
+      setCantidad((cant) => cant + 1);
+    }
+  };
+  const decrementar = () => {
+    if (cantidad >= 1) {
+      setCantidad((cant) => cant - 1);
+    }
+  };
+  const agregarAlCarrito = () => {
+    alert(`Agregaste ${cantidad} unidades de ${nombre} al carrito.`);
+  };
+  const [esFavorito, setEsFavorito] = useState(false);
+  const marcarComoFavorito = () => setEsFavorito(!esFavorito);
+  const location = useLocation(); //Guardo el URL
+  return (
+    <article className={styles.productoCard}>
+      <div className={styles.productoCardImg}>
+        <img src={img} alt={nombre} />
+      </div>
+      <div className={styles.productoCardParrafo}>
+        <h3>{nombre}</h3>
+        <p className={styles.precio}>
+          {precio.toLocaleString("es-AR", {
+            style: "currency",
+            currency: "ARS",
+          })}
+        </p>
+        {/*<div className={styles.descripcion}></div>*/}
+      </div>
+      <div className={styles.productoContadores}>
+        <Boton variant="cont" onClick={decrementar}>
+          -
+        </Boton>
+        <p>{cantidad}</p>
+        <Boton variant="cont" onClick={incrementar}>
+          +
+        </Boton>
+      </div>
+      <div className={styles.botones1}>
+        <Link
+          to={`/producto/${id}`}
+          state={{ from: location.pathname + location.hash }}
+        >
+          {/*En state guardo desde donde estoy*/}
+          <Boton variant="prod" data-descripcion={descripcion}>
+            Ver descripción
+          </Boton>
+        </Link>
+        <Boton variant="prod" onClick={agregarAlCarrito}>
+          Agregar al carrito
+        </Boton>
+        <button onClick={marcarComoFavorito} className={styles.favorito}>
+          <FaStar
+            className={`${styles.estrella} ${esFavorito ? styles.amarillo : ""}`}
+          />
+        </button>
+      </div>
+    </article>
+  );
+}

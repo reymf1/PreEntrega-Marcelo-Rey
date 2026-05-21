@@ -1,0 +1,50 @@
+.contactoCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 20rem;
+  height: auto /*47rem*/;
+  padding: 1.875rem 1.25rem;
+  background-color: #ffffff;
+  border: 1px solid rgb(102, 102, 102, 0.4);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  transition:
+    transform 0.5s ease-in-out,
+    box-shadow 0.5s ease-in-out;
+}
+.contactoCard:hover {
+  transform: scale(1.04);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+.contactoCardImg img {
+  width: 180px;
+  border-radius: 5px;
+}
+.contactoCardParrafo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 0.625rem;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  color: #696868;
+}
+.contactoCardParrafo h3 {
+  font-weight: bold;
+  font-size: 1rem;
+}
+.contactoCardParrafo a {
+  font-size: 0.8rem;
+  text-decoration: none;
+  color: #696868;
+}
+.contactoCardParrafo P {
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: #a26eaf;
+}

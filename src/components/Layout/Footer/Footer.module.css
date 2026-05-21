@@ -1,0 +1,41 @@
+.pie {
+  padding: 1rem 0;
+  background-color: #d7c8e0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  height: auto;
+}
+.pieEquipo {
+  padding: 1rem 0;
+  background-color: #d7c8e0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  height: auto;
+}
+.pie1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 6.06rem;
+  background-color: #000000;
+  color: #ffffff;
+}
+.pie1 p {
+  margin-left: 2.5rem;
+  font-size: 0.94rem;
+  font-weight: 400;
+}
+.pie11 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+}
+.pie11 img {
+  margin-right: 2.5rem;
+}

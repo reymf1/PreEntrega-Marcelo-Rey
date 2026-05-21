@@ -1,0 +1,24 @@
+.pieRedesLogo {
+  display: flex;
+  text-align: center;
+  gap: 2rem;
+}
+.pieRedes {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 1.25rem;
+}
+.pieRedes h4 {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #696868;
+}
+.pieRedesIcon {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+}
+.pieRedes img {
+  filter: contrast(30%);
+}
