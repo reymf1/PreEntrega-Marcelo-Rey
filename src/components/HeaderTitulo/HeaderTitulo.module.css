@@ -34,6 +34,7 @@
   color: #696868;
 }
 .tituloEstrellas {
+  margin-top: 5.25rem;
   background:
     linear-gradient(
       rgb(223, 236, 232, 0.9),
@@ -43,7 +44,7 @@
       rgb(223, 236, 232, 0.7)
     ),
     url(/images/estrellas2.jpeg) center / cover;
-  height: 18.75rem;
+  height: 16rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -51,7 +52,8 @@
 }
 .tituloEstrellas h1 {
   text-align: center;
-  padding-top: 6.25rem;
+  align-items: center;
+  /*padding-top: 6.25rem;*/
   font-weight: 400;
   font-size: 3.125rem;
   letter-spacing: 0.375rem;
