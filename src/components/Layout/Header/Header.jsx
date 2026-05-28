@@ -1,8 +1,12 @@
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
+import { useCart } from "../../../context/CarritoContext";
 
 function Header() {
+  // 2. Usamos el hook para acceder a la función
+  const { getCartQuantity } = useCart();
+  const totalItems = getCartQuantity();
   return (
     <header>
       <nav className={styles.headerNav}>
@@ -23,7 +27,7 @@ function Header() {
                     el.scrollIntoView({
                       block: "start",
                     });
-                  }, 100) //Pongo esta función porque si voy a productos desde una página distinta, espera a que se renderice toda la página y después scrollea. scroll recibe e=<section id="productos">, espera 100 mseg., realiza scroll al elemento ebn start al comienzo).
+                  }, 100) //Pongo esta función porque si voy a productos desde una página distinta, espera a que se renderice toda la página y después scrollea. scroll recibe e=<section id="productos">, espera 100 mseg., realiza scroll al elemento en start al comienzo).
               }
             >
               PRODUCTOS
@@ -48,6 +52,20 @@ function Header() {
             <Link to="/contacto">CONTACTO</Link>
           </li>
         </ul>
+        <div className={styles.headerNavCarrito}>
+          <Link to="/carrito">
+            <img
+              className={styles.headerNavCarritoIcon}
+              src="/images/carritoDeCompras.png"
+              alt="Carrito de Compras"
+            />
+            {totalItems >= 0 && (
+              <span className={styles.headerNavCarritoContador}>
+                {totalItems}
+              </span>
+            )}
+          </Link>
+        </div>
       </nav>
     </header>
   );

@@ -1,0 +1,57 @@
+import React, { useState, useContext, createContext } from "react"; //useState → para guardar y actualizar el carrito. useContext → para poder consumir el contexto desde los componentes. createContext → para crear el contexto.
+
+export const CartContext = createContext(); //Creamos el contexto
+
+//Custom Hook usecCart(). Es una Hook personalizada (la creo yo)
+export const useCart = () => {
+  const context = useContext(CartContext); //Consumo del contexto
+  if (!context) {
+    throw new Error("useCart debe ser usado dentro de un CartProvider");
+  }
+  return context;
+};
+
+//CartProvider es el proveedor del estado del carrito
+export const CartProvider = ({ children }) => {
+  const [cart, setCart] = useState([]); //Comenzamos con el carrito vacío
+  const addToCart = (product, quantity) => {
+    //Función que maneja el carrito
+    const itemInCart = cart.find((item) => item.id === product.id); //Busca un elemento dentro del array cart que coincida con item
+    if (itemInCart) {
+      //Si el elemento existe
+
+      //Recorre todo el array
+      const updatedCart = cart.map(
+        (item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + quantity } //Si es el mismo copia el producto y actualiza la cantidad
+            : item, //Cuando no es el mismo lo deja igual
+      );
+      setCart(updatedCart); //Actualiza el estado
+    } else {
+      setCart((prevCart) => [...prevCart, { ...product, quantity }]); // Si no existe, a los productos viejos le agrega los nuevos
+    }
+  };
+  //Se crea la función vaciar el carrito para llamarla cuando la necesitamos
+  const clearCart = () => {
+    setCart([]);
+  };
+
+  const getCartQuantity = () => {
+    return cart.reduce((acc, item) => acc + item.quantity, 0);
+  }; //Recorre el array y devuelve un único valor final. En este caso, la variable acc=0 (inicialmente) y luego va sumando todas las cantidades del carrito (array)
+  //    array.reduce((acumulador, elemento) => {
+  //     return algo;
+  //      }, valorInicial)
+
+  const getCartTotal = () => {
+    return cart.reduce((acc, item) => acc + item.precio * item.quantity, 0);
+  }; // Calcula el precio total de los productos del carrito
+  return (
+    <CartContext.Provider
+      value={{ cart, addToCart, clearCart, getCartQuantity, getCartTotal }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
+};

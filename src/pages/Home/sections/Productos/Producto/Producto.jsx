@@ -3,8 +3,12 @@ import { Boton } from "../../../../../components/Boton/Boton";
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
+import { useCart } from "../../../../../context/CarritoContext";
 
 export function Producto({ id, img, nombre, precio, stock, descripcion }) {
+  // Creamos el objeto producto a partir de las props
+  const producto = { id, img, nombre, precio, stock };
+
   const [cantidad, setCantidad] = useState(0);
   const incrementar = () => {
     if (cantidad < stock) {
@@ -16,12 +20,21 @@ export function Producto({ id, img, nombre, precio, stock, descripcion }) {
       setCantidad((cant) => cant - 1);
     }
   };
-  const agregarAlCarrito = () => {
+  {
+    /*const agregarAlCarrito = () => {
     alert(`Agregaste ${cantidad} unidades de ${nombre} al carrito.`);
-  };
+  };*/
+  }
   const [esFavorito, setEsFavorito] = useState(false);
   const marcarComoFavorito = () => setEsFavorito(!esFavorito);
   const location = useLocation(); //Guardo el URL
+
+  // Lógica del Carrito
+  const { addToCart } = useCart(); // Traemos la función del contexto
+  const agregarAlCarrito = () => {
+    addToCart(producto, cantidad);
+    alert(`Agregaste ${cantidad} unidades de ${nombre} al carrito.`);
+  };
   return (
     <article className={styles.productoCard}>
       <div className={styles.productoCardImg}>
@@ -57,7 +70,7 @@ export function Producto({ id, img, nombre, precio, stock, descripcion }) {
           </Boton>
         </Link>
         <Boton variant="prod" onClick={agregarAlCarrito}>
-          Agregar al carrito
+          Agregar {cantidad} al carrito
         </Boton>
         <button onClick={marcarComoFavorito} className={styles.favorito}>
           <FaStar
