@@ -9,14 +9,14 @@ export function Producto({ id, img, nombre, precio, stock, descripcion }) {
   // Creamos el objeto producto a partir de las props
   const producto = { id, img, nombre, precio, stock };
 
-  const [cantidad, setCantidad] = useState(0);
+  const [cantidad, setCantidad] = useState(1);
   const incrementar = () => {
     if (cantidad < stock) {
       setCantidad((cant) => cant + 1);
     }
   };
   const decrementar = () => {
-    if (cantidad >= 1) {
+    if (cantidad > 1) {
       setCantidad((cant) => cant - 1);
     }
   };
