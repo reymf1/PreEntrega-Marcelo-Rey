@@ -55,11 +55,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /*gap: 1rem;*/
   /*margin: 1rem;*/
+  background-color: #cde4f4;
+  text-align: center;
+  border: 1px solid rgb(102, 102, 102, 0.4);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  color: #a26eaf;
+  cursor: pointer;
+  transition:
+    transform 0.5s ease-in-out,
+    box-shadow 0.5s ease-in-out;
 }
 
 .productoContadores p {
-  margin: 1rem;
+  margin: 0.5rem;
   font-weight: 600;
   font-size: 0.8rem;
   color: #a26eaf;

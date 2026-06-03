@@ -51,11 +51,11 @@ export function Producto({ id, img, nombre, precio, stock, descripcion }) {
         {/*<div className={styles.descripcion}></div>*/}
       </div>
       <div className={styles.productoContadores}>
-        <Boton variant="cont" onClick={decrementar}>
+        <Boton variant="cont1" onClick={decrementar}>
           -
         </Boton>
         <p>{cantidad}</p>
-        <Boton variant="cont" onClick={incrementar}>
+        <Boton variant="cont1" onClick={incrementar}>
           +
         </Boton>
       </div>
