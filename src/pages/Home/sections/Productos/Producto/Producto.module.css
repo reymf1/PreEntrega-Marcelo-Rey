@@ -43,15 +43,23 @@
   color: #a26eaf;
 }
 .botones1 {
+  margin-top: 0.5rem;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  /*justify-content: space-around;
-  gap: 1rem;*/
-  justify-content: center;
+  /*justify-content: space-around;*/
+  gap: 1rem;
+  justify-content: space-evenly;
   gap: 0.5rem;
 }
+.productoContEstrella {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
 .productoContadores {
+  grid-column: 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -68,7 +76,6 @@
     transform 0.5s ease-in-out,
     box-shadow 0.5s ease-in-out;
 }
-
 .productoContadores p {
   margin: 0.5rem;
   font-weight: 600;
@@ -76,6 +83,7 @@
   color: #a26eaf;
 }
 .favorito {
+  margin-left: 1rem;
   border: none;
   background: none;
   cursor: pointer;

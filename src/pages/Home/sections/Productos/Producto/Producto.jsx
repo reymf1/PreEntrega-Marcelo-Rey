@@ -50,14 +50,21 @@ export function Producto({ id, img, nombre, precio, stock, descripcion }) {
         </p>
         {/*<div className={styles.descripcion}></div>*/}
       </div>
-      <div className={styles.productoContadores}>
-        <Boton variant="cont1" onClick={decrementar}>
-          -
-        </Boton>
-        <p>{cantidad}</p>
-        <Boton variant="cont1" onClick={incrementar}>
-          +
-        </Boton>
+      <div className={styles.productoContEstrella}>
+        <div className={styles.productoContadores}>
+          <Boton variant="cont1" onClick={decrementar}>
+            -
+          </Boton>
+          <p>{cantidad}</p>
+          <Boton variant="cont1" onClick={incrementar}>
+            +
+          </Boton>
+        </div>
+        <button onClick={marcarComoFavorito} className={styles.favorito}>
+          <FaStar
+            className={`${styles.estrella} ${esFavorito ? styles.amarillo : ""}`}
+          />
+        </button>
       </div>
       <div className={styles.botones1}>
         <Link
@@ -70,13 +77,8 @@ export function Producto({ id, img, nombre, precio, stock, descripcion }) {
           </Boton>
         </Link>
         <Boton variant="prod" onClick={agregarAlCarrito}>
-          Agregar {cantidad} al carrito
+          Agregar al carrito
         </Boton>
-        <button onClick={marcarComoFavorito} className={styles.favorito}>
-          <FaStar
-            className={`${styles.estrella} ${esFavorito ? styles.amarillo : ""}`}
-          />
-        </button>
       </div>
     </article>
   );
