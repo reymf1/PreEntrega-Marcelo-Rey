@@ -1,7 +1,7 @@
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import { useCart } from "../../../context/CarritoContext";
+import { useCart } from "../../../context/CartContext";
 
 function Header() {
   // 2. Usamos el hook para acceder a la función

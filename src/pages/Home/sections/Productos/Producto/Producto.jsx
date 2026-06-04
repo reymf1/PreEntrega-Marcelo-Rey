@@ -3,7 +3,7 @@ import { Boton } from "../../../../../components/Boton/Boton";
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
-import { useCart } from "../../../../../context/CarritoContext";
+import { useCart } from "../../../../../context/CartContext";
 
 export function Producto({ id, img, nombre, precio, stock, descripcion }) {
   // Creamos el objeto producto a partir de las props
