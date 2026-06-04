@@ -47,9 +47,23 @@ export const CartProvider = ({ children }) => {
   const getCartTotal = () => {
     return cart.reduce((acc, item) => acc + item.precio * item.quantity, 0);
   }; // Calcula el precio total de los productos del carrito
+
+  // NUEVA FUNCIÓN: Obtener la cantidad de un item específico
+  //Obtengo la cantidad de productos que tiene el carrito desde el contexto
+  const getCantidadActual = (productId) => {
+    const item = cart.find((item) => item.id === productId);
+    return item ? item.quantity : 0;
+  };
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, clearCart, getCartQuantity, getCartTotal }}
+      value={{
+        cart,
+        getCantidadActual, // <-- Exportamos la nueva función
+        addToCart,
+        clearCart,
+        getCartQuantity,
+        getCartTotal,
+      }}
     >
       {children}
     </CartContext.Provider>

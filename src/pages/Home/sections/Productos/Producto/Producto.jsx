@@ -9,7 +9,14 @@ export function Producto({ id, img, nombre, precio, stock, descripcion }) {
   // Creamos el objeto producto a partir de las props
   const producto = { id, img, nombre, precio, stock };
 
+  // Traemos la función del contexto
+  const { addToCart, getCantidadActual } = useCart();
+
   const [cantidad, setCantidad] = useState(1);
+
+  // Obtenemos la cantidad YA existente en el carrito desde el contexto
+  const cantidadActual = getCantidadActual(producto.id);
+
   const incrementar = () => {
     if (cantidad < stock) {
       setCantidad((cant) => cant + 1);
@@ -30,7 +37,6 @@ export function Producto({ id, img, nombre, precio, stock, descripcion }) {
   const location = useLocation(); //Guardo el URL
 
   // Lógica del Carrito
-  const { addToCart } = useCart(); // Traemos la función del contexto
   const agregarAlCarrito = () => {
     addToCart(producto, cantidad);
     alert(`Agregaste ${cantidad} unidades de ${nombre} al carrito.`);
@@ -50,12 +56,14 @@ export function Producto({ id, img, nombre, precio, stock, descripcion }) {
         </p>
         {/*<div className={styles.descripcion}></div>*/}
       </div>
+      <p>En carrito: {cantidadActual}</p>
       <div className={styles.productoContEstrella}>
         <div className={styles.productoContadores}>
           <Boton variant="cont1" onClick={decrementar}>
             -
           </Boton>
           <p>{cantidad}</p>
+          {/*Modificamos unicamente la parte del contador*/}
           <Boton variant="cont1" onClick={incrementar}>
             +
           </Boton>

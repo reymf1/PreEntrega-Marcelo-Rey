@@ -2,6 +2,8 @@
 import React from "react";
 import styles from "./Carrito.module.css";
 import { useCart } from "../../context/CartContext";
+import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link/dist/react-router-hash-link.cjs.production";
 
 const Carrito = () => {
   // Obtenemos el estado 'cart' y las funciones que necesitemos del contexto
@@ -12,10 +14,24 @@ const Carrito = () => {
       <div className={styles.cart}>
         <h1>El carrito está vacío</h1>
         <p>Agrega productos para continuar la compra.</p>
+        <HashLink
+          to="/#productos"
+          scroll={
+            (el) =>
+              setTimeout(() => {
+                el.scrollIntoView({
+                  block: "start",
+                });
+              }, 100) //Pongo esta función porque si voy a productos desde una página distinta, espera a que se renderice toda la página y después scrollea. scroll recibe e=<section id="productos">, espera 100 mseg., realiza scroll al elemento en start al comienzo).
+          }
+          className=""
+        >
+          Ver Productos
+        </HashLink>
       </div>
     );
   }
-  // Si hay productos, los mostramos
+  // Si hay productos, los mostramos con las opciones de finalizar y vaciar
   return (
     <div className={styles.cart}>
       <h1>Carrito de Compras</h1>
@@ -30,6 +46,9 @@ const Carrito = () => {
       <hr />
       <h3>Total a pagar: ${getCartTotal()}</h3>
       <button onClick={clearCart}>Vaciar Carrito</button>
+      <Link to="/" onClick={() => alert("Gracias por comprar")} className="">
+        Finalizar Compra
+      </Link>
     </div>
   );
 };
