@@ -4,6 +4,7 @@ import styles from "./Carrito.module.css";
 import { useCart } from "../../context/CartContext";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link/dist/react-router-hash-link.cjs.production";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 const Carrito = () => {
   // Obtenemos el estado 'cart' y las funciones que necesitemos del contexto
@@ -38,6 +39,7 @@ const Carrito = () => {
       {cart.map((item) => (
         <div key={item.id} className="cart-item">
           <h4>{item.nombre}</h4>
+          <RiDeleteBinLine size={18} />
           <p>Cantidad: {item.quantity}</p>
           <p>Precio unitario: ${item.precio}</p>
           <p>Subtotal: ${item.precio * item.quantity}</p>

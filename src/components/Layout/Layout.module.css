@@ -1,0 +1,10 @@
+aside {
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translateX(100%); /* oculto a la derecha */
+  transition: transform 0.3s ease-in-out;
+}
+.open {
+  transform: translateX(0); /* visible al abrir */
+}

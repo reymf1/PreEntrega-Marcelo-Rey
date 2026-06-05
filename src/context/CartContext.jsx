@@ -13,7 +13,11 @@ export const useCart = () => {
 
 //CartProvider es el proveedor del estado del carrito
 export const CartProvider = ({ children }) => {
+  //Estados
   const [cart, setCart] = useState([]); //Comenzamos con el carrito vacío
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  //Funciones de productos
   const addToCart = (product, quantity) => {
     //Función que maneja el carrito
     const itemInCart = cart.find((item) => item.id === product.id); //Busca un elemento dentro del array cart que coincida con item
@@ -37,6 +41,7 @@ export const CartProvider = ({ children }) => {
     setCart([]);
   };
 
+  //Funciones de consulta
   const getCartQuantity = () => {
     return cart.reduce((acc, item) => acc + item.quantity, 0);
   }; //Recorre el array y devuelve un único valor final. En este caso, la variable acc=0 (inicialmente) y luego va sumando todas las cantidades del carrito (array)
@@ -54,15 +59,43 @@ export const CartProvider = ({ children }) => {
     const item = cart.find((item) => item.id === productId);
     return item ? item.quantity : 0;
   };
+
+  // NUEVA FUNCIÓN: Eliminar un producto del carrito
+  const removeItem = (productId) => {
+    const updatedCart = cart.filter((item) => item.id !== productId);
+    setCart(updatedCart);
+  };
+  // NUEVA FUNCIÓN: Verificar si un producto ya está en el carrito
+  const isInCart = (productId) => {
+    return cart.some((item) => item.id === productId);
+  };
+
+  //Funciones del aside Carrito
+  const openCart = () => {
+    setIsCartOpen(true);
+  };
+  const closeCart = () => {
+    setIsOpenCart(false);
+  };
+
   return (
     <CartContext.Provider
       value={{
+        //Estados
         cart,
-        getCantidadActual, // <-- Exportamos la nueva función
+        isCartOpen,
+        //Funciones sobre productos
         addToCart,
         clearCart,
+        removeItem,
+        //Funciones de Consulta
+        getCantidadActual, // <-- Exportamos la nueva función
         getCartQuantity,
         getCartTotal,
+        isInCart,
+        //Funciones UI
+        openCart,
+        closeCart,
       }}
     >
       {children}
