@@ -1,3 +1,36 @@
-.cart {
+/*.cart {
   padding-top: 5.25rem;
+}*/
+.cart {
+  background: linear-gradient(
+    to bottom,
+    rgba(185, 190, 189),
+    rgb(215, 200, 224),
+    rgb(215, 200, 224),
+    rgb(215, 200, 224),
+    rgb(215, 200, 224),
+    rgba(185, 190, 189)
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 22vw;
+  height: 100vh;
+  border: 1px solid #cac4c4;
+  box-shadow: -3px 0px 3px rgba(0, 0, 0, 0.2);
+}
+.cart h2 {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: #696868;
+  letter-spacing: 0.1rem;
+}
+.iconClose {
+  top: 1rem;
+  right: 0.5rem;
+  position: fixed;
+  cursor: pointer;
+  filter: contrast(30%);
 }

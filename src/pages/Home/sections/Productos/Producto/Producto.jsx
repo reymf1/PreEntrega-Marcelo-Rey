@@ -10,7 +10,7 @@ export function Producto({ id, img, nombre, precio, stock, descripcion }) {
   const producto = { id, img, nombre, precio, stock };
 
   // Traemos la función del contexto
-  const { addToCart, getCantidadActual } = useCart();
+  const { addToCart, getCantidadActual, openCart } = useCart();
 
   const [cantidad, setCantidad] = useState(1);
 
@@ -39,6 +39,7 @@ export function Producto({ id, img, nombre, precio, stock, descripcion }) {
   // Lógica del Carrito
   const agregarAlCarrito = () => {
     addToCart(producto, cantidad);
+    openCart();
     alert(`Agregaste ${cantidad} unidades de ${nombre} al carrito.`);
   };
   return (

@@ -75,7 +75,7 @@ export const CartProvider = ({ children }) => {
     setIsCartOpen(true);
   };
   const closeCart = () => {
-    setIsOpenCart(false);
+    setIsCartOpen(false);
   };
 
   return (

@@ -5,7 +5,7 @@ import { useCart } from "../../../context/CartContext";
 
 function Header() {
   // 2. Usamos el hook para acceder a la función
-  const { getCartQuantity } = useCart();
+  const { getCartQuantity, openCart } = useCart();
   const totalItems = getCartQuantity();
   return (
     <header>
@@ -53,18 +53,17 @@ function Header() {
           </li>
         </ul>
         <div className={styles.headerNavCarrito}>
-          <Link to="/carrito">
-            <img
-              className={styles.headerNavCarritoIcon}
-              src="/images/carritoDeCompras.png"
-              alt="Carrito de Compras"
-            />
-            {totalItems >= 0 && (
-              <span className={styles.headerNavCarritoContador}>
-                {totalItems}
-              </span>
-            )}
-          </Link>
+          <img
+            onClick={openCart}
+            className={styles.headerNavCarritoIcon}
+            src="/images/carritoDeCompras.png"
+            alt="Carrito de Compras"
+          />
+          {totalItems >= 0 && (
+            <span className={styles.headerNavCarritoContador}>
+              {totalItems}
+            </span>
+          )}
         </div>
       </nav>
     </header>

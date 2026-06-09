@@ -5,10 +5,11 @@ import { useCart } from "../../context/CartContext";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link/dist/react-router-hash-link.cjs.production";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { IoClose } from "react-icons/io5";
 
 const Carrito = () => {
   // Obtenemos el estado 'cart' y las funciones que necesitemos del contexto
-  const { cart, clearCart, getCartTotal } = useCart();
+  const { cart, clearCart, getCartTotal, closeCart } = useCart();
   // Si el carrito está vacío, mostramos un mensaje
   if (cart.length === 0) {
     return (
@@ -35,7 +36,8 @@ const Carrito = () => {
   // Si hay productos, los mostramos con las opciones de finalizar y vaciar
   return (
     <div className={styles.cart}>
-      <h1>Carrito de Compras</h1>
+      <IoClose onClick={closeCart} className={styles.iconClose} size={25} />
+      <h2>Carrito de Compras</h2>
       {cart.map((item) => (
         <div key={item.id} className="cart-item">
           <h4>{item.nombre}</h4>
