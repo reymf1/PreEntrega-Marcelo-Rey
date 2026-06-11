@@ -4,8 +4,21 @@
   right: 0;
   transform: translateX(100%); /* oculto a la derecha */
   transition: transform 0.3s ease-in-out;
-  z-index: 20;
+  z-index: 30;
 }
 .open {
   transform: translateX(0); /* visible al abrir */
+}
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 20;
+}
+.overlayOpen {
+  opacity: 1;
+  visibility: visible;
 }

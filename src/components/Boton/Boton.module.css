@@ -1,6 +1,8 @@
 .consultar,
 .prod,
-.cont {
+.cont,
+.vaciar,
+.compra {
   background-color: #cde4f4;
   font-weight: 600;
   text-align: center;
@@ -30,7 +32,8 @@
 }
 .consultar:hover,
 .prod:hover,
-.cont:hover {
+.cont:hover,
+.compra {
   transform: scale(1.04);
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
@@ -62,4 +65,21 @@
   padding: 0rem 1rem;
   cursor: pointer;
   /* width: 2rem;*/
+}
+.vaciar {
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  line-height: 1.2rem;
+  letter-spacing: 0rem;
+  cursor: pointer;
+}
+.compra {
+  font-size: 1.05rem;
+  line-height: 1.2rem;
+  padding: 0.5rem 0px;
+  cursor: pointer;
+  width: 12rem;
 }

@@ -7,13 +7,19 @@ import styles from "./Layout.module.css";
 
 //Todo lo que pongamos dentro de <Layout> en App.jsx será el "children"
 export function Layout() {
-  const { isCartOpen } = useCart();
+  const { isCartOpen, closeCart } = useCart();
   return (
     <div>
       <Header />
       <main>
         <Outlet />
       </main>
+      <div
+        className={`${styles.overlay} ${isCartOpen ? styles.overlayOpen : ""}`}
+        onClick={() => {
+          if (isCartOpen) closeCart();
+        }}
+      />
       <aside className={`${styles.aside} ${isCartOpen ? styles.open : ""}`}>
         <Carrito />
       </aside>
