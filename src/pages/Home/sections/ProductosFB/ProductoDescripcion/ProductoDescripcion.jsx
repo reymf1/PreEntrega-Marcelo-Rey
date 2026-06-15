@@ -1,0 +1,95 @@
+import { useState, useEffect } from "react";
+import { useParams, useLocation } from "react-router-dom"; //Devuelve un objeto con los parámetros de la URL
+import styles from "../ProductoDescripcion/ProductoDescripcion.module.css";
+import HeaderTitulo from "../../../../../components/HeaderTitulo/HeaderTitulo";
+import { Link } from "react-router-dom";
+import { Boton } from "../../../../../components/Boton/Boton";
+import { HashLink } from "react-router-hash-link";
+
+const ProductoDescripcion = () => {
+  //Es lo mismo que function ProductoDescripcion()
+  const { id } = useParams(); //Tomo el id de useParams
+  const [producto, setProducto] = useState(null);
+  const [error, setError] = useState(null);
+  const [cargando, setCargando] = useState(true);
+  useEffect(() => {
+    const cargarProducto = async () => {
+      try {
+        const respuesta = await fetch("/data/productos.json");
+        if (!respuesta.ok) {
+          throw new Error("No se pudo cargar la información de los productos");
+        }
+        const datos = await respuesta.json();
+        const productoEncontrado = datos.find((p) => p.id === parseInt(id)); //Porque useParams devuelve string
+
+        productoEncontrado
+          ? setProducto(productoEncontrado)
+          : setError("Producto no encontrado");
+      } catch (error) {
+        setError("Error al cargar el producto");
+      } finally {
+        setCargando(false);
+      }
+    };
+    cargarProducto();
+  }, [id]);
+
+  if (cargando) {
+    return <h2>Cargando detalle del producto...</h2>;
+  }
+  if (error) {
+    return <h2>{error}</h2>;
+  }
+  const { img, nombre, precio, descripcion } = producto;
+  const location = useLocation();
+  const volverA = location.state?.from || "/"; //Si existe location.state volverA=location.state sino volverA="/"
+  return (
+    <>
+      <div className={styles.descrProducto}>
+        <HeaderTitulo
+          titulo="Descripción de Producto"
+          subtitulo="Abraza la sanación y la sabiduría interior"
+          variant="tituloh2"
+          tituloTag="h2"
+          subtituloTag="p"
+        />
+      </div>
+      <div className={styles.producto}>
+        <article className={styles.productoCard}>
+          <div className={styles.productoCardImg}>
+            <img src={img} alt={nombre} />
+          </div>
+          <div className={styles.productoCardParrafo}>
+            <h3>{nombre}</h3>
+            <p className={styles.precio}>
+              {precio.toLocaleString("es-AR", {
+                style: "currency",
+                currency: "ARS",
+              })}
+            </p>
+            <div
+              className={styles.descripcion}
+              dangerouslySetInnerHTML={{ __html: descripcion }}
+            />
+            {/*Convierte el contenido de descripcion del json en html dentro de un div*/}
+          </div>
+          <div className={styles.botones1}>
+            <HashLink
+              to={volverA}
+              scroll={(el) =>
+                setTimeout(() => {
+                  el.scrollIntoView({
+                    block: "start",
+                  });
+                }, 100)
+              }
+            >
+              <Boton variant="prod">Volver</Boton>
+            </HashLink>
+          </div>
+        </article>
+      </div>
+    </>
+  );
+};
+export default ProductoDescripcion;

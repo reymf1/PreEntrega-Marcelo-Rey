@@ -18,6 +18,17 @@ export function Home() {
           subtituloTag="p"
         />
       </section>
+
+      <section id="productosFB">
+        <ProductosFBContainer
+          promocion={false}
+          titulo="ProductosFB"
+          subtitulo="Abraza la sanación y la sabiduría interior"
+          variant="tituloh2"
+          tituloTag="h2"
+          subtituloTag="p"
+        />
+      </section>
     </>
   );
 }
