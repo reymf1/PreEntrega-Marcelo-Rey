@@ -21,31 +21,16 @@ function Header() {
           <li>
             <HashLink
               to="/#productos"
-              scroll={
+              /*scroll={
                 (el) =>
                   setTimeout(() => {
                     el.scrollIntoView({
                       block: "start",
                     });
-                  }, 100) //Pongo esta función porque si voy a productos desde una página distinta, espera a que se renderice toda la página y después scrollea. scroll recibe e=<section id="productos">, espera 100 mseg., realiza scroll al elemento en start al comienzo).
-              }
+                  }, 500) //Pongo esta función porque si voy a productos desde una página distinta, espera a que se renderice toda la página y después scrollea. scroll recibe e=<section id="productos">, espera 100 mseg., realiza scroll al elemento en start al comienzo).
+              }*/
             >
               PRODUCTOS
-            </HashLink>
-          </li>
-          <li>
-            <HashLink
-              to="/#productosFB"
-              scroll={
-                (el) =>
-                  setTimeout(() => {
-                    el.scrollIntoView({
-                      block: "start",
-                    });
-                  }, 100) //Pongo esta función porque si voy a productos desde una página distinta, espera a que se renderice toda la página y después scrollea. scroll recibe e=<section id="productos">, espera 100 mseg., realiza scroll al elemento en start al comienzo).
-              }
-            >
-              PRODUCTOSFB
             </HashLink>
           </li>
           <li>

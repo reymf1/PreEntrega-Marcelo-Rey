@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { ProductosList } from "../ProductosList/ProductosList";
 import HeaderTitulo from "../../../../../components/HeaderTitulo/HeaderTitulo";
 import styles from "./ProductosContainer.module.css";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../../../firebase/config";
 
 //-----------Función Productos---------------------
 export function ProductosContainer({
@@ -18,14 +20,22 @@ export function ProductosContainer({
   useEffect(() => {
     const obtenerProductos = async () => {
       try {
-        const respuesta = await fetch("/data/productos.json");
+        /*const respuesta = await fetch("/data/productos.json");
         if (!respuesta.ok) {
           throw new Error("No se pudo cargar la información de los productos");
         }
         const datos = await respuesta.json();
-        setProductos(datos);
+        setProductos(datos);*/
+        const productosDB = collection(db, "productos");
+        const respuesta = await getDocs(productosDB);
+        setProductos(
+          respuesta.docs.map((doc) => ({
+            ...doc.data(),
+            FbId: doc.id, //Este id es el automático de firebase, pero no lo necesito ya que tengo mi propio id creado por mi (dentro de data), pero lo agrego con otro nombre por si lo necesito más adelante para implementar alta, edición o eliminación de productos.
+          })),
+        );
       } catch (error) {
-        setError("Error al cargar el producto");
+        setError(error.message);
       } finally {
         setCargando(false);
       }
@@ -35,6 +45,14 @@ export function ProductosContainer({
   const productosAMostrar = promocion
     ? productos.filter((prod) => prod.promocion)
     : productos; //Filtra los productos que tienen promocion=true en el json
+
+  useEffect(() => {
+    if (!cargando && window.location.hash === "#productos") {
+      document.getElementById("productos")?.scrollIntoView({
+        block: "start",
+      });
+    }
+  }, [cargando]);
   return (
     <>
       <HeaderTitulo
