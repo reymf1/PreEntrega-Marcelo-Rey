@@ -46,6 +46,7 @@ export function ProductosContainer({
     ? productos.filter((prod) => prod.promocion)
     : productos; //Filtra los productos que tienen promocion=true en el json
 
+  //Este useEffect lo uso si voy a productos desde una página distinta. Verifica si va a productos y si terminó de cargar los mismos.
   useEffect(() => {
     if (!cargando && window.location.hash === "#productos") {
       document.getElementById("productos")?.scrollIntoView({

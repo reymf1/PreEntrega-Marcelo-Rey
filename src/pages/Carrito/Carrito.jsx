@@ -10,7 +10,14 @@ import { Boton } from "../../components/Boton/Boton";
 
 const Carrito = () => {
   // Obtenemos el estado 'cart' y las funciones que necesitemos del contexto
-  const { cart, clearCart, getCartTotal, closeCart } = useCart();
+  const {
+    cart,
+    clearCart,
+    getCartTotal,
+    closeCart,
+    incrementarCantidad,
+    decrementarCantidad,
+  } = useCart();
   // Si el carrito está vacío, mostramos un mensaje
   if (cart.length === 0) {
     return (
@@ -19,16 +26,17 @@ const Carrito = () => {
         <h2>Tu Carrito de Compras</h2>
         <h4>Aún no hay artículos en tu carrito</h4>
         <HashLink
+          onClick={closeCart}
           className={styles.cartExpl}
           to="/#productos"
-          scroll={
+          /*scroll={
             (el) =>
               setTimeout(() => {
                 el.scrollIntoView({
                   block: "start",
                 });
               }, 100) //Pongo esta función porque si voy a productos desde una página distinta, espera a que se renderice toda la página y después scrollea. scroll recibe e=<section id="productos">, espera 100 mseg., realiza scroll al elemento en start al comienzo).
-          }
+          }*/
         >
           Explora nuestros productos
         </HashLink>
@@ -47,14 +55,31 @@ const Carrito = () => {
         <div className={styles.cartItems}>
           {cart.map((item) => (
             <div key={item.id} className={styles.cartItem}>
-              <div className={styles.cartItemImg}>
-                <img src={item.img} alt={item.nombre} />
-              </div>
-              <div className={styles.cartItemPrecio}>
-                <h4>{item.nombre}</h4>
-                <p>Cantidad: {item.quantity}</p>
-                <p>Precio unitario: ${item.precio}</p>
-                <p>Subtotal: ${item.precio * item.quantity}</p>
+              <div className={styles.cartItemImgPrecio}>
+                <div className={styles.cartItemImg}>
+                  <img src={item.img} alt={item.nombre} />
+                </div>
+                <div className={styles.cartItemPrecio}>
+                  <h4>{item.nombre}</h4>
+                  <div className={styles.cartItemContadores}>
+                    <Boton
+                      variant="cont1"
+                      onClick={() => inrementarCantidad(item.id)}
+                    >
+                      -
+                    </Boton>
+                    <p>{item.quantity}</p>
+                    {/*Modificamos unicamente la parte del contador*/}
+                    <Boton
+                      variant="cont1"
+                      onClick={() => decrementarCantidad(item.id)}
+                    >
+                      +
+                    </Boton>
+                  </div>
+                  <p>Precio unitario: ${item.precio}</p>
+                  <p>Subtotal: ${item.precio * item.quantity}</p>
+                </div>
               </div>
               <div className={styles.cartItemDelete}>
                 <RiDeleteBinLine size={18} />

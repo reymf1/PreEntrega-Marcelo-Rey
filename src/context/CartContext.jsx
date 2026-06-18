@@ -70,6 +70,26 @@ export const CartProvider = ({ children }) => {
     return cart.some((item) => item.id === productId);
   };
 
+  //Función para incrementar y decrementar la cantidad de un producto dentro del carrito
+  const incrementarCantidad = (productId) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === productId && item.quantity < item.stock
+          ? { ...item, quantity: item.quantity + 1 }
+          : item,
+      ),
+    );
+  };
+  const decrementarCantidad = (productId) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === productId && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item,
+      ),
+    );
+  };
+
   //Funciones del aside Carrito
   const openCart = () => {
     setIsCartOpen(true);
@@ -88,6 +108,8 @@ export const CartProvider = ({ children }) => {
         addToCart,
         clearCart,
         removeItem,
+        incrementarCantidad,
+        decrementarCantidad,
         //Funciones de Consulta
         getCantidadActual, // <-- Exportamos la nueva función
         getCartQuantity,

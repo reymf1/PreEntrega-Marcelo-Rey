@@ -40,7 +40,7 @@ export function Producto({ id, img, nombre, precio, stock, descripcion }) {
   const agregarAlCarrito = () => {
     addToCart(producto, cantidad);
     openCart();
-    alert(`Agregaste ${cantidad} unidades de ${nombre} al carrito.`);
+    /*alert(`Agregaste ${cantidad} unidades de ${nombre} al carrito.`);*/
   };
   return (
     <article className={styles.productoCard}>
