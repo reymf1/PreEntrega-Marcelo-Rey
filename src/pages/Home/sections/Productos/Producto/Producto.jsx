@@ -10,7 +10,13 @@ export function Producto({ id, img, nombre, precio, stock, descripcion }) {
   const producto = { id, img, nombre, precio, stock };
 
   // Traemos la función del contexto
-  const { addToCart, getCantidadActual, openCart } = useCart();
+  const {
+    addToCart,
+    getCantidadActual,
+    openCart,
+    incrementarCantidad,
+    decrementarCantidad,
+  } = useCart();
 
   const [cantidad, setCantidad] = useState(1);
 
@@ -27,11 +33,11 @@ export function Producto({ id, img, nombre, precio, stock, descripcion }) {
       setCantidad((cant) => cant - 1);
     }
   };
-  {
-    /*const agregarAlCarrito = () => {
+
+  /*const agregarAlCarrito = () => {
     alert(`Agregaste ${cantidad} unidades de ${nombre} al carrito.`);
   };*/
-  }
+
   const [esFavorito, setEsFavorito] = useState(false);
   const marcarComoFavorito = () => setEsFavorito(!esFavorito);
   const location = useLocation(); //Guardo el URL
@@ -40,6 +46,7 @@ export function Producto({ id, img, nombre, precio, stock, descripcion }) {
   const agregarAlCarrito = () => {
     addToCart(producto, cantidad);
     openCart();
+    setCantidad(1);
     /*alert(`Agregaste ${cantidad} unidades de ${nombre} al carrito.`);*/
   };
   return (

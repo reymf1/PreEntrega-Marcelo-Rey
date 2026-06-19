@@ -62,18 +62,12 @@ const Carrito = () => {
                 <div className={styles.cartItemPrecio}>
                   <h4>{item.nombre}</h4>
                   <div className={styles.cartItemContadores}>
-                    <Boton
-                      variant="cont1"
-                      onClick={() => inrementarCantidad(item.id)}
-                    >
+                    <Boton variant="contCarrito" onClick={decrementarCantidad}>
                       -
                     </Boton>
                     <p>{item.quantity}</p>
                     {/*Modificamos unicamente la parte del contador*/}
-                    <Boton
-                      variant="cont1"
-                      onClick={() => decrementarCantidad(item.id)}
-                    >
+                    <Boton variant="contCarrito" onClick={incrementarCantidad}>
                       +
                     </Boton>
                   </div>
