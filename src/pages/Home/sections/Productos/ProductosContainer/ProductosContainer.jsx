@@ -31,7 +31,7 @@ export function ProductosContainer({
         setProductos(
           respuesta.docs.map((doc) => ({
             ...doc.data(),
-            FbId: doc.id, //Este id es el automático de firebase, pero no lo necesito ya que tengo mi propio id creado por mi (dentro de data), pero lo agrego con otro nombre por si lo necesito más adelante para implementar alta, edición o eliminación de productos.
+            idFirestore: doc.id, //Este id es el automático de firebase, pero no lo necesito ya que tengo mi propio id creado por mi (dentro de data), pero lo agrego con otro nombre por si lo necesito más adelante para implementar alta, edición o eliminación de productos.
           })),
         );
       } catch (error) {

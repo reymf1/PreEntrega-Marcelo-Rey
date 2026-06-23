@@ -5,6 +5,9 @@ import HeaderTitulo from "../../../../../components/HeaderTitulo/HeaderTitulo";
 import { Link } from "react-router-dom";
 import { Boton } from "../../../../../components/Boton/Boton";
 import { HashLink } from "react-router-hash-link";
+// Importaciones clave para obtener un solo documento
+import { doc, query, collection, where, getDocs } from "firebase/firestore";
+import { db } from "../../../../../firebase/config";
 
 const ProductoDescripcion = () => {
   //Es lo mismo que function ProductoDescripcion()
@@ -12,7 +15,11 @@ const ProductoDescripcion = () => {
   const [producto, setProducto] = useState(null);
   const [error, setError] = useState(null);
   const [cargando, setCargando] = useState(true);
-  useEffect(() => {
+
+  const location = useLocation();
+  const volverA = location.state?.from || "/"; //Si existe location.state volverA=location.state sino volverA="/"
+
+  /*useEffect(() => {
     const cargarProducto = async () => {
       try {
         const respuesta = await fetch("/data/productos.json");
@@ -32,17 +39,48 @@ const ProductoDescripcion = () => {
       }
     };
     cargarProducto();
-  }, [id]);
+  }, [id]);*/
 
-  if (cargando) {
-    return <h2>Cargando detalle del producto...</h2>;
-  }
-  if (error) {
-    return <h2>{error}</h2>;
-  }
+  useEffect(() => {
+    if (!id) {
+      setCargando(false);
+      setError("Id inválido");
+      return;
+    }
+    const cargarProducto = async () => {
+      try {
+        /*Usaría const docRef = doc(db, "Productos nacionales", id); si utilizaría el id de firebase*/
+        //Como queremos utilizar nuestro id, creamos una consulta = query
+        const queryId = query(
+          //creamos una referencia a la colección productos
+          collection(db, "productos"),
+          //sólo los documentos cuyo campo id sea igual al valor recibido
+          where("id", "==", Number(id)),
+        );
+        const resp = await getDocs(queryId);
+        if (resp.empty) {
+          setCargando(false);
+          setError("No se encontró el producto");
+          return;
+        }
+        setProducto({
+          ...resp.docs[0].data(), //Tomo la posición "0" para asegurame que me devuelva el primer documento del array, por si existen id (no de firestore) duplicados.
+          idFirestore: resp.docs[0].id,
+        });
+      } catch (error) {
+        setError(`Error al cargar el producto:${error.message}`);
+      } finally {
+        setCargando(false);
+      }
+    };
+    cargarProducto();
+  }, [id]);
+  if (cargando) return <h2>Cargando detalle del producto...</h2>;
+  if (error) return <h2>{error}</h2>;
+  if (!producto) return null;
+
   const { img, nombre, precio, descripcion } = producto;
-  const location = useLocation();
-  const volverA = location.state?.from || "/"; //Si existe location.state volverA=location.state sino volverA="/"
+
   return (
     <>
       <div className={styles.descrProducto}>
@@ -76,13 +114,13 @@ const ProductoDescripcion = () => {
           <div className={styles.botones1}>
             <HashLink
               to={volverA}
-              scroll={(el) =>
+              /*scroll={(el) =>
                 setTimeout(() => {
                   el.scrollIntoView({
                     block: "start",
                   });
                 }, 100)
-              }
+              }*/
             >
               <Boton variant="prod">Volver</Boton>
             </HashLink>
