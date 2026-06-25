@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Boton } from "../../../../../components/Boton/Boton";
 import { HashLink } from "react-router-hash-link";
 // Importaciones clave para obtener un solo documento
-import { doc, query, collection, where, getDocs } from "firebase/firestore";
+import { doc, query, collection, where, getDoc } from "firebase/firestore";
 import { db } from "../../../../../firebase/config";
 
 const ProductoDescripcion = () => {
@@ -51,21 +51,22 @@ const ProductoDescripcion = () => {
       try {
         /*Usaría const docRef = doc(db, "Productos nacionales", id); si utilizaría el id de firebase*/
         //Como queremos utilizar nuestro id, creamos una consulta = query
-        const queryId = query(
+        /*const queryId = query(
           //creamos una referencia a la colección productos
           collection(db, "productos"),
           //sólo los documentos cuyo campo id sea igual al valor recibido
           where("id", "==", Number(id)),
-        );
-        const resp = await getDocs(queryId);
-        if (resp.empty) {
+        );*/
+        const docRef = doc(db, "productos", id);
+        const resp = await getDoc(docRef);
+        if (!resp.exists()) {
           setCargando(false);
           setError("No se encontró el producto");
           return;
         }
         setProducto({
-          ...resp.docs[0].data(), //Tomo la posición "0" para asegurame que me devuelva el primer documento del array, por si existen id (no de firestore) duplicados.
-          idFirestore: resp.docs[0].id,
+          ...resp.data(),
+          id: resp.id,
         });
       } catch (error) {
         setError(`Error al cargar el producto:${error.message}`);

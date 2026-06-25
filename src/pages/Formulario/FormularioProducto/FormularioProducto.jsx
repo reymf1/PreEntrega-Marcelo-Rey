@@ -9,15 +9,18 @@ export function FormularioProducto({
   manejarEnvio,
   manejarCambioImagen,
   cargando,
+  error,
+  inputFileRef,
 }) {
   return (
     <div className={styles.contact}>
       <h2>Agregar Nuevo Producto</h2>
       <form className={styles.formulario} onSubmit={manejarEnvio}>
         <div className={styles.formulario1}>
-          <label>
+          <label className={styles.labelText}>
             Nombre del Producto
             <input
+              className={styles.inputText}
               type="text"
               placeholder="Rocío Áurico"
               name="nombre" // Atributo clave para identificar el input
@@ -25,9 +28,10 @@ export function FormularioProducto({
               onChange={manejarCambio}
             />
           </label>
-          <label>
+          <label className={styles.labelText}>
             Precio
             <input
+              className={styles.inputText}
               type="number"
               placeholder="5000"
               name="precio" // Atributo clave
@@ -35,9 +39,20 @@ export function FormularioProducto({
               onChange={manejarCambio}
             />
           </label>
-          <label>
+          <label className={styles.labelFile}>
+            Porducto en promoción
+            <input
+              className={styles.inputFile}
+              type="checkbox"
+              name="promocion"
+              checked={datosForm.promocion}
+              onChange={manejarCambio}
+            />
+          </label>
+          <label className={styles.labelText}>
             Stock
             <input
+              className={styles.inputText}
               type="number"
               placeholder="5"
               name="stock" // Atributo clave
@@ -54,10 +69,15 @@ export function FormularioProducto({
               accept="image/*"
               onChange={manejarCambioImagen}
               className={styles.formFile}
+              ref={inputFileRef}
             />
           </label>
         </div>
-        <button type="submit" disabled={cargando} className={styles.botonGuardar}>
+        <button
+          type="submit"
+          disabled={cargando}
+          className={styles.botonGuardar}
+        >
           {cargando ? (
             <>
               <span className={styles.spinner}></span>
@@ -68,6 +88,7 @@ export function FormularioProducto({
           )}
         </button>
       </form>
+      {error && <p>{error}</p>}
     </div>
   );
 }

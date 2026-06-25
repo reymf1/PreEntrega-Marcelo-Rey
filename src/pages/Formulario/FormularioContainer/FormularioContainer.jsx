@@ -1,25 +1,32 @@
 import React, { useState } from "react";
 import { FormularioProducto } from "../FormularioProducto/FormularioProducto";
 import HeaderTitulo from "../../../components/HeaderTitulo/HeaderTitulo";
-import styles from "./FormularioContainer.module.css";
+// IMPORTACIONES CLAVE DE FIREBASE
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../../firebase/config";
+import { useRef } from "react"; //Uso useRef para hacer referencia al input type=file para limpiar la pantalla una vez cargada la imágen
 
 export function FormularioContainer() {
   const [datosForm, setDatosForm] = useState({
     nombre: "",
     precio: "",
     stock: "",
+    descripcion: "",
+    promocion: false,
+    categoria: "",
     // Quitamos la urlImagen de aca porque la obtendremos después de la subida
   });
-  //setImagenFile(null); //Se resetea el setImagenFile
   // 1. Nuevo estado para el archivo de imagen
   const [imagenFile, setImagenFile] = useState(null);
+  const [error, setError] = useState(null);
   const [cargando, setCargando] = useState(false);
+  const inputFileRef = useRef(null); //Para limpiar el archivo enviado con el input
 
   const manejarCambio = (evento) => {
-    const { name, value } = evento.target;
+    const { name, value, type, checked } = evento.target;
     setDatosForm({
       ...datosForm,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -27,22 +34,22 @@ export function FormularioContainer() {
   const manejarCambioImagen = (evento) => {
     setImagenFile(evento.target.files[0]);
   };
-
   const manejarEnvio = async (evento) => {
     evento.preventDefault();
     //console.log("Enviando los siguientes datos a la API:", datosForm);
+    setError(null);
     // Validamos que el usuario haya seleccionado una imagen
     if (!imagenFile) {
-      alert("Por favor, selecciona una imagen para el producto.");
+      setError("Por favor, selecciona una imagen para el producto.");
       return;
     }
     // --- Lógica para subir la imagen a Imgbb ---
-    const apiKey = import.meta.env.VITE_IMGBB_API_KEY; // 🚨 ¡Reemplazá esto con tu clave!
+    const apiKey = import.meta.env.VITE_IMGBB_API_KEY;
     const formData = new FormData();
     formData.append("image", imagenFile);
     try {
       setCargando(true);
-      console.log("Subiendo imagen a Imgbb...");
+      /*console.log("Subiendo imagen a Imgbb...");*/
       const respuestaImgbb = await fetch(
         `https://api.imgbb.com/1/upload?key=${apiKey}`,
         {
@@ -66,28 +73,35 @@ export function FormularioContainer() {
           // Agregamos la URL obtenida
           precio: Number(datosForm.precio), //Convierte a número
           stock: Number(datosForm.stock),
-          urlImagen: datosImgbb.data.url,
+          imagen: datosImgbb.data.url,
         };
 
-        // Por el momento hacemos un console.log
-        console.log(
-          "Enviando los siguientes datos COMPLETOS a la API:",
-          productoCompleto,
-        );
+        // LÓGICA PARA SUBIR DATOS A FIRESTORE ---
+        console.log("Enviando producto a Firebase:", productoCompleto);
+        // Apuntamos a la colección "productos" (si no existe, se crea)
+        const productosCollection = collection(db, "productos");
+        // Agregamos el nuevo documento a la colección
+        await addDoc(productosCollection, productoCompleto);
+
         // Reset formulario
         setDatosForm({
           nombre: "",
           precio: "",
           stock: "",
+          descripcion: "",
+          promocion: false,
+          categoria: "",
         });
-
-        setImagenFile(null);
+        setImagenFile(null); //Se resetea el setImagenFile
+        if (inputFileRef.current) {
+          //El if es porque en el primer render el input no fue conectado al ref, entonces es null
+          inputFileRef.current.value = "";
+        } //Se limpia el input file
       } else {
         throw new Error("La subida de la imagen a Imgbb falló.");
       }
     } catch (error) {
-      console.error("Error en el proceso de envío:", error);
-      alert("Hubo un error al subir la imagen. Por favor, intentá de nuevo.");
+      setError(`Error al cargar el producto: ${error.message}`);
     } finally {
       setCargando(false);
     }
@@ -108,6 +122,8 @@ export function FormularioContainer() {
         // Pasamos la nueva función como prop
         manejarCambioImagen={manejarCambioImagen}
         cargando={cargando}
+        error={error}
+        inputFileRef={inputFileRef}
       />
     </>
   );
