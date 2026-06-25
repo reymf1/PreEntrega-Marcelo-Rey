@@ -57,7 +57,6 @@ export function FormularioContainer() {
           body: formData,
         },
       );
-
       if (!respuestaImgbb.ok) {
         throw new Error("Error en la respuesta del servidor");
       }
@@ -73,7 +72,7 @@ export function FormularioContainer() {
           // Agregamos la URL obtenida
           precio: Number(datosForm.precio), //Convierte a número
           stock: Number(datosForm.stock),
-          imagen: datosImgbb.data.url,
+          img: datosImgbb.data.url,
         };
 
         // LÓGICA PARA SUBIR DATOS A FIRESTORE ---
