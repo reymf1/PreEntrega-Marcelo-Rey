@@ -6,7 +6,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useRef } from "react"; //Uso useRef para hacer referencia al input type=file para limpiar la pantalla una vez cargada la imágen
 
-export function FormularioContainer() {
+export function FormularioContainer({ productoAgregado }) {
   const [datosForm, setDatosForm] = useState({
     nombre: "",
     precio: "",
@@ -96,6 +96,9 @@ export function FormularioContainer() {
           //El if es porque en el primer render el input no fue conectado al ref, entonces es null
           inputFileRef.current.value = "";
         } //Se limpia el input file
+
+        // Actualizar la lista
+        await productoAgregado();
       } else {
         throw new Error("La subida de la imagen a Imgbb falló.");
       }

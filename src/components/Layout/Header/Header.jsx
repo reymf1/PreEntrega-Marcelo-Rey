@@ -37,7 +37,7 @@ function Header() {
             <Link to="/promo">PROMOCIONES</Link>
           </li>
           <li>
-            <Link to="/formulario">ALTA DE PRODUCTOS</Link>
+            <Link to="/gestion">GESTIÓN PRODUCTOS</Link>
           </li>
           <li>
             <Link to="/nosotros">NOSOTROS</Link>

@@ -8,6 +8,7 @@ import { Routes, Route } from "react-router-dom";
 import { ScrollToTop } from "./components/ScrollToTop/ScrollToTop";
 import ProductoDescripcion from "./pages/Home/sections/Productos/ProductoDescripcion/ProductoDescripcion";
 import Carrito from "./pages/Carrito/Carrito";
+import GestionProductos from "./pages/GestionProductos/GestionProcuctos";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
             }
           />
           <Route path="producto/:id" element={<ProductoDescripcion />} />
-          <Route path="formulario" element={<FormularioContainer />} />
+          <Route path="gestion" element={<GestionProductos />} />
           <Route path="nosotros" element={<EquipoContainer />} />
           <Route path="carrito" element={<Carrito />} />
         </Route>
