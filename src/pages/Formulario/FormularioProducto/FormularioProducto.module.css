@@ -103,7 +103,6 @@
 }
 .botonGuardar {
   margin-top: 3.5rem;
-  margin-bottom: 3.125rem;
   background-color: #cde4f4;
   font-weight: 600;
   font-size: 1rem;
@@ -125,4 +124,25 @@
 .botonGuardar:hover {
   transform: scale(1.04);
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+/*Para alinear el spinner con el texto*/
+.cargando {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.spinner {
+  display: inline-block;/*Por defecto es inline entre span y no respeta height y width, por eso pongo inline-bloc*/
+  width: 18px;
+  height: 18px;
+  border: 3px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -110,13 +110,13 @@ export function FormularioContainer({ productoAgregado }) {
   };
   return (
     <>
-      <HeaderTitulo
+      {/*<HeaderTitulo
         titulo="Alta de Productos"
         subtitulo="CENTRO PARA LA VIDA ESPIRITUAL"
         variant="tituloEstrellas"
         tituloTag="h1"
         subtituloTag="h2"
-      />
+      />*/}
       <FormularioProducto
         datosForm={datosForm}
         manejarCambio={manejarCambio}

@@ -79,10 +79,9 @@ export function FormularioProducto({
           className={styles.botonGuardar}
         >
           {cargando ? (
-            <>
-              <span className={styles.spinner}></span>
-              Subiendo...
-            </>
+            <span className={styles.cargando}>
+              <span className={styles.spinner}></span>Subiendo...
+            </span>
           ) : (
             "Guardar Producto"
           )}
