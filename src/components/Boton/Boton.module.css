@@ -52,7 +52,8 @@
   transform: scale(1.04);
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
-.cont1:hover {
+.cont1:hover,
+.contCarrito:hover {
   transform: scale(1.04);
   border-radius: 50%;
   background-color: #ddebf7;

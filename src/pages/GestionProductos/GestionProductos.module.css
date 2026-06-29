@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   background-color: rgb(229, 215, 239, 0.5);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 .list h2 {
   margin-top: 2rem;
@@ -12,17 +13,15 @@
   color: #696868;
 }
 .listItems {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
   margin-top: 5rem;
   padding: 0rem 0rem 2.5rem 2.5rem;
   font-weight: 500;
   font-size: 0.9rem;
   line-height: 1.57rem;
   color: #696868;
-  gap: 2rem;
+  gap: 1rem;
 }
 .listItems li {
   list-style: none;

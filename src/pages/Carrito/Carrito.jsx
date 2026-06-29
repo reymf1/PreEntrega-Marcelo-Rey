@@ -17,7 +17,13 @@ const Carrito = () => {
     closeCart,
     incrementarCantidad,
     decrementarCantidad,
+    removeItem,
   } = useCart();
+
+  const finalizarCompra = () => {
+    alert("Gracias por comprar");
+    clearCart();
+  };
   // Si el carrito está vacío, mostramos un mensaje
   if (cart.length === 0) {
     return (
@@ -61,27 +67,50 @@ const Carrito = () => {
                 </div>
                 <div className={styles.cartItemPrecio}>
                   <h4>{item.nombre}</h4>
+                  <p className={styles.precio}>
+                    Precio unitario:{" "}
+                    <span>
+                      {item.precio.toLocaleString("es-AR", {
+                        style: "currency",
+                        currency: "ARS",
+                      })}
+                    </span>
+                  </p>
                   <div className={styles.cartItemContadores}>
-                    <Boton variant="contCarrito" onClick={decrementarCantidad}>
+                    <Boton
+                      variant="contCarrito"
+                      onClick={() => decrementarCantidad(item.id)}
+                    >
                       -
                     </Boton>
                     <p>{item.quantity}</p>
                     {/*Modificamos unicamente la parte del contador*/}
-                    <Boton variant="contCarrito" onClick={incrementarCantidad}>
+                    <Boton
+                      variant="contCarrito"
+                      onClick={() => incrementarCantidad(item.id)}
+                    >
                       +
                     </Boton>
                   </div>
-                  <p>Precio unitario: ${item.precio}</p>
-                  <p>Subtotal: ${item.precio * item.quantity}</p>
+                  <p className={styles.subtotal}>
+                    Subtotal:{" "}
+                    <span>
+                      {(item.precio * item.quantity).toLocaleString("es-AR", {
+                        style: "currency",
+                        currency: "ARS",
+                      })}
+                    </span>
+                  </p>
                 </div>
               </div>
-              <div className={styles.cartItemDelete}>
-                <RiDeleteBinLine size={18} />
-              </div>
+              <RiDeleteBinLine
+                className={styles.cartItemDelete}
+                size={18}
+                onClick={() => removeItem(item.id)}
+              />
             </div>
           ))}
         </div>
-
         <footer className={styles.footer}>
           <div className={styles.total}>
             <span className={styles.totalPagar}>Total a pagar: </span>
@@ -95,14 +124,8 @@ const Carrito = () => {
           <Boton variant="vaciar" onClick={clearCart}>
             Vaciar Carrito <RiDeleteBinLine size={18} />
           </Boton>
-          <Link
-            to="/"
-            onClick={() => alert("Gracias por comprar")}
-            className=""
-          >
-            <Boton variant="compra" onClick={clearCart}>
-              Finalizar Compra
-            </Boton>
+          <Link to="/" onClick={finalizarCompra}>
+            <Boton variant="compra">Finalizar Compra</Boton>
           </Link>
         </footer>
       </div>

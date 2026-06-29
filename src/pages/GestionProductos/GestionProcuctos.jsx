@@ -52,8 +52,11 @@ const GestionProductos = () => {
                   <p>{prod.nombre}</p>
                   <p>${prod.precio}</p>
                   {/*acá agregaremos los botones de acción */}
-                  <Boton variant="eliminar" onClick={() => handleDelete(prod.id)}>
-                    Eliminar <RiDeleteBinLine size={15}/>
+                  <Boton
+                    variant="eliminar"
+                    onClick={() => handleDelete(prod.id)}
+                  >
+                    Eliminar <RiDeleteBinLine size={15} />
                   </Boton>
                 </div>
               </div>
