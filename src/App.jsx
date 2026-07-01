@@ -1,7 +1,6 @@
 import "./App.css";
 import { Home } from "./pages/Home/Home";
 import { Layout } from "./components/Layout/Layout";
-import { FormularioContainer } from "./pages/Formulario/FormularioContainer/FormularioContainer";
 import { EquipoContainer } from "./pages/Equipo/EquipoContainer/EquipoContainer";
 import { ProductosContainer } from "./pages/Home/sections/Productos/ProductosContainer/ProductosContainer";
 import { Routes, Route } from "react-router-dom";

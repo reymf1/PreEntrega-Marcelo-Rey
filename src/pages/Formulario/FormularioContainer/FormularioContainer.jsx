@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+/*import React, { useState } from "react";
 import { FormularioProducto } from "../FormularioProducto/FormularioProducto";
 import HeaderTitulo from "../../../components/HeaderTitulo/HeaderTitulo";
 // IMPORTACIONES CLAVE DE FIREBASE
@@ -20,7 +20,7 @@ export function FormularioContainer({ productoAgregado }) {
   const [imagenFile, setImagenFile] = useState(null);
   const [error, setError] = useState(null);
   const [cargando, setCargando] = useState(false);
-  const inputFileRef = useRef(null); //Para limpiar el archivo enviado con el input
+  const inputFileRef = useRef(null); //Uso useRef para hacer referencia al input type=file para limpiar la pantalla una vez cargada la imágen
 
   const manejarCambio = (evento) => {
     const { name, value, type, checked } = evento.target;
@@ -35,7 +35,7 @@ export function FormularioContainer({ productoAgregado }) {
     setImagenFile(evento.target.files[0]);
   };
   const manejarEnvio = async (evento) => {
-    evento.preventDefault();
+    evento.preventDefault();//Evita recargar la pantalla
     //console.log("Enviando los siguientes datos a la API:", datosForm);
     setError(null);
     // Validamos que el usuario haya seleccionado una imagen
@@ -50,7 +50,7 @@ export function FormularioContainer({ productoAgregado }) {
     try {
       setCargando(true);
       /*console.log("Subiendo imagen a Imgbb...");*/
-      const respuestaImgbb = await fetch(
+/*const respuestaImgbb = await fetch(
         `https://api.imgbb.com/1/upload?key=${apiKey}`,
         {
           method: "POST",
@@ -116,7 +116,7 @@ export function FormularioContainer({ productoAgregado }) {
         variant="tituloEstrellas"
         tituloTag="h1"
         subtituloTag="h2"
-      />*/}
+      />*/ /*}
       <FormularioProducto
         datosForm={datosForm}
         manejarCambio={manejarCambio}
@@ -129,4 +129,4 @@ export function FormularioContainer({ productoAgregado }) {
       />
     </>
   );
-}
+}*/

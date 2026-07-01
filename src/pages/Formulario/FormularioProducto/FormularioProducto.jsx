@@ -6,15 +6,16 @@ import styles from "./FormularioProducto.module.css";
 export function FormularioProducto({
   datosForm,
   manejarCambio,
-  manejarEnvio,
   manejarCambioImagen,
+  manejarEnvio,
   cargando,
   error,
   inputFileRef,
+  modoEdicion,
 }) {
   return (
     <div className={styles.contact}>
-      <h2>Agregar Nuevo Producto</h2>
+      <h2>{modoEdicion ? "Editar Producto" : "Agregar Nuevo Producto"}</h2>
       <form className={styles.formulario} onSubmit={manejarEnvio}>
         <div className={styles.formulario1}>
           <label className={styles.labelText}>
@@ -80,8 +81,10 @@ export function FormularioProducto({
         >
           {cargando ? (
             <span className={styles.cargando}>
-              <span className={styles.spinner}></span>Subiendo...
+              <span className={styles.spinner}></span>Procesando...
             </span>
+          ) : modoEdicion ? (
+            "Actualizar Producto"
           ) : (
             "Guardar Producto"
           )}
