@@ -7,7 +7,7 @@ import { Routes, Route } from "react-router-dom";
 import { ScrollToTop } from "./components/ScrollToTop/ScrollToTop";
 import ProductoDescripcion from "./pages/Home/sections/Productos/ProductoDescripcion/ProductoDescripcion";
 import Carrito from "./pages/Carrito/Carrito";
-import GestionProductos from "./pages/GestionProductos/GestionProcuctos";
+import GestionProductos from "./pages/GestionProductos/GestionProductos";
 
 function App() {
   return (

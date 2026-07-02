@@ -132,7 +132,7 @@
   gap: 0.5rem;
 }
 .spinner {
-  display: inline-block;/*Por defecto es inline entre span y no respeta height y width, por eso pongo inline-bloc*/
+  display: inline-block; /*Por defecto es inline entre span y no respeta height y width, por eso pongo inline-bloc*/
   width: 18px;
   height: 18px;
   border: 3px solid #fff;
@@ -145,4 +145,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+.error {
+  color: red;
+  margin-top: 1rem;
 }

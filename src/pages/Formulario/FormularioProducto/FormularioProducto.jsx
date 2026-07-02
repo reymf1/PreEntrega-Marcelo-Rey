@@ -27,6 +27,7 @@ export function FormularioProducto({
               name="nombre" // Atributo clave para identificar el input
               value={datosForm.nombre}
               onChange={manejarCambio}
+              required
             />
           </label>
           <label className={styles.labelText}>
@@ -38,10 +39,11 @@ export function FormularioProducto({
               name="precio" // Atributo clave
               value={datosForm.precio}
               onChange={manejarCambio}
+              required
             />
           </label>
           <label className={styles.labelFile}>
-            Porducto en promoción
+            Producto en promoción
             <input
               className={styles.inputFile}
               type="checkbox"
@@ -59,6 +61,7 @@ export function FormularioProducto({
               name="stock" // Atributo clave
               value={datosForm.stock}
               onChange={manejarCambio}
+              required
             />
           </label>
         </div>
@@ -90,7 +93,7 @@ export function FormularioProducto({
           )}
         </button>
       </form>
-      {error && <p>{error}</p>}
+      {error && <p className={styles.error}>{error}</p>}
     </div>
   );
 }

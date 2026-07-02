@@ -7,6 +7,7 @@ import {
   doc,
   deleteDoc,
   addDoc,
+  updateDoc,
 } from "firebase/firestore";
 import HeaderTitulo from "../../components/HeaderTitulo/HeaderTitulo";
 import styles from "./GestionProductos.module.css";
@@ -14,6 +15,7 @@ import { Boton } from "../../components/Boton/Boton";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useRef } from "react"; //Uso useRef para hacer referencia al input type=file para limpiar la pantalla una vez cargada la imágen
+import { toast } from "react-toastify"; //Para usar notificaciones en lugar de alert
 
 const GestionProductos = () => {
   const estadoInicialForm = {
@@ -26,7 +28,6 @@ const GestionProductos = () => {
     // Quitamos la urlImagen de aca porque la obtendremos después de la subida
   };
   const [datosForm, setDatosForm] = useState(estadoInicialForm);
-  // 1. Nuevo estado para el archivo de imagen
   const [imagenFile, setImagenFile] = useState(null);
   const [error, setError] = useState(null);
   const [cargando, setCargando] = useState(false);
@@ -34,6 +35,7 @@ const GestionProductos = () => {
   const [productos, setProductos] = useState([]);
   const [productoAEditar, setProductoAEditar] = useState(null);
 
+  //Función para cargar los productos de Firestore
   const cargarProductos = async () => {
     const productosRef = collection(db, "productos");
     const resp = await getDocs(productosRef);
@@ -42,32 +44,64 @@ const GestionProductos = () => {
   useEffect(() => {
     cargarProductos();
   }, []);
+
+  //Función para subir la imágen a Imgbb
+  const subirImagen = async (imagenFile) => {
+    const apiKey = import.meta.env.VITE_IMGBB_API_KEY;
+    const formData = new FormData();
+    formData.append("image", imagenFile);
+    const respuestaImgbb = await fetch(
+      `https://api.imgbb.com/1/upload?key=${apiKey}`,
+      {
+        method: "POST",
+        body: formData,
+      },
+    );
+    if (!respuestaImgbb.ok) {
+      throw new Error("Error en la respuesta del servidor"); //Pasa al catch(error)
+    }
+    const datosImgbb = await respuestaImgbb.json();
+    if (!datosImgbb.success) {
+      throw new Error("La subida de la imagen a Imgbb falló.");
+    }
+    return datosImgbb.data.url;
+  };
+
+  //Función para eliminar un producto
   const handleDelete = async (id) => {
     const confirmacion = window.confirm(
       "¿Está seguro de que desea eliminar este producto?",
     );
     if (confirmacion) {
-      const docRef = doc(db, "productos", id);
-      await deleteDoc(docRef);
-      // Actualizamos el estado local para reflejar el cambio en la UI inmediatamente.
-      setProductos((productosActuales) =>
-        productosActuales.filter((prod) => prod.id !== id),
-      );
-      alert("Producto eliminado.");
+      try {
+        const docRef = doc(db, "productos", id);
+        await deleteDoc(docRef);
+        // Actualizamos el estado local para reflejar el cambio en la UI inmediatamente.
+        setProductos((productosActuales) =>
+          productosActuales.filter((prod) => prod.id !== id),
+        );
+        toast.success("Producto eliminado correctamente");
+      } catch (error) {
+        setError(`No se pudo eliminar el producto: ${error.message}`);
+      }
     }
   };
 
+  //Función para manejar un cambio en los input
   const manejarCambio = (evento) => {
     const { name, value, type, checked } = evento.target;
-    setDatosForm({
-      ...datosForm,
+    setDatosForm((prev) => ({
+      ...prev,
       [name]: type === "checkbox" ? checked : value,
-    });
+    }));
   };
-  // 2. Nueva función para manejar el cambio del input de tipo "file"
+
+  // Función para manejar el cambio del input de tipo "file"
   const manejarCambioImagen = (evento) => {
     setImagenFile(evento.target.files[0]);
   };
+
+  //Función para el envío de datos
   const manejarEnvio = async (evento) => {
     evento.preventDefault(); //Evita recargar la pantalla
     //console.log("Enviando los siguientes datos a la API:", datosForm);
@@ -77,60 +111,50 @@ const GestionProductos = () => {
       setError("Por favor, selecciona una imagen para el producto.");
       return;
     }
-
-    // --- Lógica para subir la imagen a Imgbb ---
-    const apiKey = import.meta.env.VITE_IMGBB_API_KEY;
-    const formData = new FormData();
-    formData.append("image", imagenFile);
-
-    let urlImagen = datosForm.imagen;
+    setCargando(true);
     try {
-      setCargando(true);
-
-      const respuestaImgbb = await fetch(
-        `https://api.imgbb.com/1/upload?key=${apiKey}`,
-        {
-          method: "POST",
-          body: formData,
-        },
-      );
-      if (!respuestaImgbb.ok) {
-        throw new Error("Error en la respuesta del servidor");
+      //Subo la imagen sólo si imagenFile != null, es decir si quiero subirla a imgbb
+      let urlImagen = datosForm.img;
+      if (imagenFile) {
+        urlImagen = await subirImagen(imagenFile);
       }
-
-      const datosImgbb = await respuestaImgbb.json();
-
-      if (datosImgbb.success) {
-        console.log("Imagen subida con éxito. URL:", datosImgbb.data.url);
-
-        // Unimos la URL de la imagen con el resto de los datos del formulario
-        const productoCompleto = {
-          ...datosForm,
-          // Agregamos la URL obtenida
-          precio: Number(datosForm.precio), //Convierte a número
-          stock: Number(datosForm.stock),
-          img: datosImgbb.data.url,
-        };
-
-        // LÓGICA PARA SUBIR DATOS A FIRESTORE ---
-        console.log("Enviando producto a Firebase:", productoCompleto);
+      // Unimos la URL de la imagen con el resto de los datos del formulario
+      const productoCompleto = {
+        ...datosForm,
+        // Agregamos la URL obtenida
+        precio: Number(datosForm.precio), //Convierte a número
+        stock: Number(datosForm.stock),
+        img: urlImagen, //urlImagen contiene la nueva imágen o la anterior (si decido no cambiarla al editar)
+      };
+      // LÓGICA PARA SUBIR DATOS A FIRESTORE ---
+      if (productoAEditar) {
+        const docRef = doc(db, "productos", productoAEditar.id);
+        await updateDoc(docRef, productoCompleto);
+        toast.success("Producto actualizado correctamente");
+      } else {
         // Apuntamos a la colección "productos" (si no existe, se crea)
         const productosCollection = collection(db, "productos");
         // Agregamos el nuevo documento a la colección
         await addDoc(productosCollection, productoCompleto);
-
-        setDatosForm(estadoInicialForm); // Reset formulario
-        setImagenFile(null); //Se resetea el setImagenFile
-        if (inputFileRef.current) {
-          //El if es porque en el primer render el input no fue conectado al ref, entonces es null
-          inputFileRef.current.value = "";
-        } //Se limpia el input file
-        await cargarProductos(); // Actualizar la lista
-      } else {
-        throw new Error("La subida de la imagen a Imgbb falló.");
+        toast.success("Producto agregado correctamente");
       }
+      // Actualizar la lista
+      await cargarProductos();
+      //Resets
+      // Reset formulario
+      setDatosForm(estadoInicialForm);
+      //Se resetea el setImagenFile
+      setImagenFile(null);
+      //Se limpia el input file
+      if (inputFileRef.current) {
+        //El if es porque en el primer render el input no fue conectado al ref, entonces es null
+        inputFileRef.current.value = "";
+      }
+      //Reset de productoAEditar
+      setProductoAEditar(null);
     } catch (error) {
-      setError(`Error al cargar el producto: ${error.message}`);
+      setError(`No se pudo guardar el producto: ${error.message}`);
+      return;
     } finally {
       setCargando(false);
     }
@@ -174,17 +198,14 @@ const GestionProductos = () => {
               <div>
                 <p>${prod.precio}</p>
               </div>
-              <div>
+              <div className={styles.listBotones}>
                 <Boton variant="eliminar" onClick={() => manejarEditar(prod)}>
                   Editar <AiOutlineEdit size={17} />
                 </Boton>
-              </div>
-              <div>
                 <Boton variant="eliminar" onClick={() => handleDelete(prod.id)}>
                   Eliminar <RiDeleteBinLine size={15} />
                 </Boton>
               </div>
-              {/*acá agregaremos los botones de acción */}
             </li>
           ))}
         </ul>
