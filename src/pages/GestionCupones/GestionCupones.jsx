@@ -33,6 +33,8 @@ const GestionCupones = () => {
 };
 
 //Crear cupón (CREATE)
-const crearCupon = async (e) => {
-  e.preventDefault();
-};
+/*const crearCupon = async (e) => {
+  e.preventDefault();//Ante un evento, evita que la pantalla se recargue
+  setError(null);
+  if(!codigo)
+};*/
