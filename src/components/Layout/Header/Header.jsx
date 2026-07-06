@@ -40,6 +40,9 @@ function Header() {
             <Link to="/gestion">GESTIÓN PRODUCTOS</Link>
           </li>
           <li>
+            <Link to="/admin/cupones">GESTIÓN CUPONES</Link>
+          </li>
+          <li>
             <Link to="/nosotros">NOSOTROS</Link>
           </li>
           <li>

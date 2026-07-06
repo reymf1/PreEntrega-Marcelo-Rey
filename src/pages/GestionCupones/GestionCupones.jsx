@@ -9,11 +9,20 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify"; //Para usar notificaciones en lugar de alert
+import { FormularioCupon } from "../Formulario/FormularioCupon/FormularioCupon";
+import styles from "./GestionCupones.module.css";
+import HeaderTitulo from "../../components/HeaderTitulo/HeaderTitulo";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { AiOutlineEdit } from "react-icons/ai";
+import { Boton } from "../../components/Boton/Boton";
 
 const GestionCupones = () => {
   const [cupones, setCupones] = useState([]);
   const [error, setError] = useState(null);
   const [cargando, setCargando] = useState(false);
+  const estadoInicialForm = { codigo: "", descuento: "" };
+  const [datosForm, setDatosForm] = useState(estadoInicialForm);
+  const [cuponAEditar, setCuponAEditar] = useState(null);
 
   //Cargar cupones (READ)
   const cargarCupones = async () => {
@@ -23,18 +32,157 @@ const GestionCupones = () => {
       const lista = resp.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       setCupones(lista);
     } catch (error) {
-      setError(`"Error al cargar los cupones: " ${error.message}`);
+      setError(`Error al cargar los cupones: ${error.message}`);
     }
   };
 
   useEffect(() => {
     cargarCupones();
   }, []);
-};
 
-//Crear cupón (CREATE)
-/*const crearCupon = async (e) => {
-  e.preventDefault();//Ante un evento, evita que la pantalla se recargue
-  setError(null);
-  if(!codigo)
-};*/
+  // Funciones para crear y actualizar cupones
+  //Función para manejar un cambio en los input
+  const manejarCambio = (e) => {
+    const { name, value } = e.target;
+    setDatosForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  //Función para el envío de datos
+  const manejarEnvio = async (e) => {
+    e.preventDefault(); //Evita recargar la pantalla
+
+    setError(null);
+
+    // Validamos que todos los campos estén completos
+    const codigo = datosForm.codigo.trim();
+    if (!codigo || !datosForm.descuento) {
+      setError("Complete todos los campos");
+      return;
+    }
+    setCargando(true);
+    try {
+      // LÓGICA PARA SUBIR DATOS A FIRESTORE ---
+      if (cuponAEditar) {
+        const docRef = doc(db, "cupones", cuponAEditar.id);
+        await updateDoc(docRef, {
+          codigo: codigo, //Elimina los espacios de los extremos
+          descuento: Number(datosForm.descuento),
+        });
+        toast.success("Cupón actualizado correctamente");
+      } else {
+        // Apuntamos a la colección "cupones" (si no existe, se crea)
+        const cuponesCollection = collection(db, "cupones");
+        // Agregamos el nuevo documento a la colección
+        await addDoc(cuponesCollection, {
+          codigo: codigo, //Elimina los espacios de los extremos
+          descuento: Number(datosForm.descuento),
+        });
+        toast.success("Cupón agregado correctamente");
+      }
+      // Actualizar la lista
+      await cargarCupones();
+
+      //Resets
+      // Reset formulario
+      setDatosForm(estadoInicialForm);
+      //Reset de cuponAEditar
+      setCuponAEditar(null);
+    } catch (error) {
+      setError(`No se pudo guardar el cupón: ${error.message}`);
+      return;
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  const manejarEditar = (cupon) => {
+    setCuponAEditar(cupon);
+    setDatosForm({
+      codigo: cupon.codigo,
+      descuento: cupon.descuento,
+    });
+  };
+
+  const modoEdicion = cuponAEditar !== null;
+
+  // Cancelar edición
+  const cancelarEdicion = () => {
+    setCuponAEditar(null);
+    setDatosForm(estadoInicialForm);
+  };
+
+  //Función para eliminar un cupón
+  const eliminarCupon = async (id) => {
+    const confirmacion = window.confirm(
+      "¿Está seguro de que desea eliminar este cupón?",
+    );
+    if (confirmacion) {
+      try {
+        const docRef = doc(db, "cupones", id);
+        await deleteDoc(docRef);
+
+        // Actualizamos el estado local para reflejar el cambio en la UI inmediatamente.
+        setCupones((cuponesActuales) =>
+          cuponesActuales.filter((cupon) => cupon.id !== id),
+        );
+        toast.success("Cupón eliminado correctamente");
+        if (cuponAEditar?.id === id) {
+          setCuponAEditar(null);
+          setDatosForm(estadoInicialForm);
+        }
+      } catch (error) {
+        setError(`No se pudo eliminar el cupón: ${error.message}`);
+      }
+    }
+  };
+  return (
+    <>
+      <HeaderTitulo
+        titulo="Gestión de Cupones"
+        subtitulo="CENTRO PARA LA VIDA ESPIRITUAL"
+        variant="tituloEstrellas"
+        tituloTag="h1"
+        subtituloTag="h2"
+      />
+      <FormularioCupon
+        datosForm={datosForm}
+        manejarCambio={manejarCambio}
+        manejarEnvio={manejarEnvio}
+        cargando={cargando}
+        error={error}
+        modoEdicion={modoEdicion}
+        cancelarEdicion={cancelarEdicion}
+      />
+      <div className={styles.list}>
+        <h2>Administrar Cupones</h2>
+        <ul className={styles.listItems}>
+          {cupones.map((cupon) => (
+            <li key={cupon.id}>
+              <div className={styles.listItemTextProd}>
+                <p>{cupon.codigo}</p>
+              </div>
+              <div>
+                <p>%{cupon.descuento}</p>
+              </div>
+              <div className={styles.listBotones}>
+                <Boton variant="eliminar" onClick={() => manejarEditar(cupon)}>
+                  Editar <AiOutlineEdit size={17} />
+                </Boton>
+                <Boton
+                  variant="eliminar"
+                  onClick={() => eliminarCupon(cupon.id)}
+                >
+                  Eliminar <RiDeleteBinLine size={15} />
+                </Boton>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
+  );
+};
+export default GestionCupones;

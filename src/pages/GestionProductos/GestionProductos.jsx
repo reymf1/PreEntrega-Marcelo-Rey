@@ -159,10 +159,12 @@ const GestionProductos = () => {
       setCargando(false);
     }
   };
+
   const manejarEditar = (producto) => {
     setProductoAEditar(producto);
     setDatosForm(producto);
   };
+
   const modoEdicion = productoAEditar !== null;
 
   return (
@@ -189,7 +191,7 @@ const GestionProductos = () => {
         <ul className={styles.listItems}>
           {productos.map((prod) => (
             <li key={prod.id}>
-              <div className={styles.listItemText}>
+              <div className={styles.listItemImg}>
                 <img src={prod.img} alt={prod.nombre} />
               </div>
               <div className={styles.listItemTextProd}>

@@ -1,0 +1,58 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(229, 215, 239, 0.5);
+  border-top: 1px solid #ecc0f7;
+}
+.list h2 {
+  margin: 2rem 0 3rem 0;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+  font-size: 2.5rem;
+  color: #696868;
+}
+.listItems {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  font-size: 0.9rem;
+  line-height: 1.57rem;
+  color: #696868;
+  background-color: #ffffff;
+  border: 1px solid rgb(102, 102, 102, 0.4);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 2rem auto;
+}
+.listItems li {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 100px 2fr 1fr 1fr;
+  justify-items: flex-start;
+  align-items: center;
+  padding: 1rem 0;
+  /*border-top: 1px solid rgba(0, 0, 0, 0.08);*/
+}
+.listItemImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.list img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #696868;
+}
+.listBotones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}

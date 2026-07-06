@@ -8,7 +8,7 @@ import { ScrollToTop } from "./components/ScrollToTop/ScrollToTop";
 import ProductoDescripcion from "./pages/Home/sections/Productos/ProductoDescripcion/ProductoDescripcion";
 import Carrito from "./pages/Carrito/Carrito";
 import GestionProductos from "./pages/GestionProductos/GestionProductos";
-
+import GestionCupones from "./pages/GestionCupones/GestionCupones";
 function App() {
   return (
     <>
@@ -33,6 +33,7 @@ function App() {
           <Route path="gestion" element={<GestionProductos />} />
           <Route path="nosotros" element={<EquipoContainer />} />
           <Route path="carrito" element={<Carrito />} />
+          <Route path="admin/cupones" element={<GestionCupones />} />
         </Route>
       </Routes>
     </>
