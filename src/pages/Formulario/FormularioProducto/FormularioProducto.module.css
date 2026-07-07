@@ -10,7 +10,7 @@
   text-align: center;
   font-family: "Playfair Display", serif;
   font-weight: 400;
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   color: #696868;
 }
 .formulario {
@@ -101,21 +101,23 @@
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
 }
+.botones {
+  display: flex;
+}
 .botonGuardar {
   margin-top: 3.5rem;
   background-color: #cde4f4;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.9rem;
   line-height: 1.57rem;
   letter-spacing: 0.0625rem;
   color: #696868;
-  padding: 0.625rem 0.5rem;
   border: none;
   border: 1px solid rgb(102, 102, 102, 0.4);
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   color: #a26eaf;
-  padding: 0.625rem 2.5rem;
+  padding: 0.625rem 1rem;
   cursor: pointer;
   transition:
     transform 0.5s ease-in-out,

@@ -57,9 +57,30 @@ const GestionCupones = () => {
     setError(null);
 
     // Validamos que todos los campos estén completos
-    const codigo = datosForm.codigo.trim();
-    if (!codigo || !datosForm.descuento) {
+    const codigo = datosForm.codigo.trim().toUpperCase();
+
+    if (!codigo || datosForm.descuento === "") {
       setError("Complete todos los campos");
+      return;
+    }
+
+    // Validamos que descuento esté entre 1 y 100
+    const descuento = Number(datosForm.descuento);
+
+    if (descuento < 1 || descuento > 100) {
+      setError("El descuento debe estar entre 1 y 100%");
+      return;
+    }
+
+    // Validación de código duplicado
+    const existe = cupones.some(
+      (c) =>
+        c.codigo.toLowerCase() === codigo.toLowerCase() &&
+        c.id !== cuponAEditar?.id,
+    );
+
+    if (existe) {
+      setError("Ese código ya existe");
       return;
     }
     setCargando(true);
@@ -69,7 +90,7 @@ const GestionCupones = () => {
         const docRef = doc(db, "cupones", cuponAEditar.id);
         await updateDoc(docRef, {
           codigo: codigo, //Elimina los espacios de los extremos
-          descuento: Number(datosForm.descuento),
+          descuento: descuento,
         });
         toast.success("Cupón actualizado correctamente");
       } else {
@@ -78,7 +99,7 @@ const GestionCupones = () => {
         // Agregamos el nuevo documento a la colección
         await addDoc(cuponesCollection, {
           codigo: codigo, //Elimina los espacios de los extremos
-          descuento: Number(datosForm.descuento),
+          descuento: descuento,
         });
         toast.success("Cupón agregado correctamente");
       }
@@ -92,7 +113,6 @@ const GestionCupones = () => {
       setCuponAEditar(null);
     } catch (error) {
       setError(`No se pudo guardar el cupón: ${error.message}`);
-      return;
     } finally {
       setCargando(false);
     }
@@ -103,6 +123,11 @@ const GestionCupones = () => {
     setDatosForm({
       codigo: cupon.codigo,
       descuento: cupon.descuento,
+    });
+    //Cuando selecciona editar lo envía al formulario
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
     });
   };
 
@@ -129,6 +154,8 @@ const GestionCupones = () => {
           cuponesActuales.filter((cupon) => cupon.id !== id),
         );
         toast.success("Cupón eliminado correctamente");
+
+        //Verifica que el cupon a editar no sea el que estoy eliminando. Si lo estoy eliminando blanquea el formulario de edición
         if (cuponAEditar?.id === id) {
           setCuponAEditar(null);
           setDatosForm(estadoInicialForm);
@@ -157,7 +184,7 @@ const GestionCupones = () => {
         cancelarEdicion={cancelarEdicion}
       />
       <div className={styles.list}>
-        <h2>Administrar Cupones</h2>
+        <h2>Administrar Cupones de Descuento</h2>
         <ul className={styles.listItems}>
           {cupones.map((cupon) => (
             <li key={cupon.id}>

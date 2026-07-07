@@ -76,11 +76,17 @@ const GestionProductos = () => {
       try {
         const docRef = doc(db, "productos", id);
         await deleteDoc(docRef);
+
         // Actualizamos el estado local para reflejar el cambio en la UI inmediatamente.
         setProductos((productosActuales) =>
           productosActuales.filter((prod) => prod.id !== id),
         );
         toast.success("Producto eliminado correctamente");
+        //Verifica que el cupon a editar no sea el que estoy eliminando. Si lo estoy eliminando blanquea el formulario de edición
+        if (productoAEditar?.id === id) {
+          setProductoAEditar(null);
+          setDatosForm(estadoInicialForm);
+        }
       } catch (error) {
         setError(`No se pudo eliminar el producto: ${error.message}`);
       }
@@ -154,7 +160,6 @@ const GestionProductos = () => {
       setProductoAEditar(null);
     } catch (error) {
       setError(`No se pudo guardar el producto: ${error.message}`);
-      return;
     } finally {
       setCargando(false);
     }
@@ -162,10 +167,26 @@ const GestionProductos = () => {
 
   const manejarEditar = (producto) => {
     setProductoAEditar(producto);
-    setDatosForm(producto);
+    setDatosForm({ ...producto });
+    //Cuando selecciona editar lo envía al formulario
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const modoEdicion = productoAEditar !== null;
+
+  // Cancelar edición
+  const cancelarEdicion = () => {
+    setProductoAEditar(null);
+    setDatosForm(estadoInicialForm);
+    setImagenFile(null);
+
+    if (inputFileRef.current) {
+      inputFileRef.current.value = "";
+    }
+  };
 
   return (
     <>
@@ -185,6 +206,7 @@ const GestionProductos = () => {
         error={error}
         inputFileRef={inputFileRef}
         modoEdicion={modoEdicion}
+        cancelarEdicion={cancelarEdicion}
       />
       <div className={styles.list}>
         <h2>Administrar Productos</h2>

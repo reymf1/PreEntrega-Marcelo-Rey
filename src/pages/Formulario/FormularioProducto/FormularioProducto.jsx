@@ -12,6 +12,7 @@ export function FormularioProducto({
   error,
   inputFileRef,
   modoEdicion,
+  cancelarEdicion,
 }) {
   return (
     <div className={styles.contact}>
@@ -77,21 +78,32 @@ export function FormularioProducto({
             />
           </label>
         </div>
-        <button
-          type="submit"
-          disabled={cargando}
-          className={styles.botonGuardar}
-        >
-          {cargando ? (
-            <span className={styles.cargando}>
-              <span className={styles.spinner}></span>Procesando...
-            </span>
-          ) : modoEdicion ? (
-            "Actualizar Producto"
-          ) : (
-            "Guardar Producto"
+        <div className={styles.botones}>
+          <button
+            type="submit"
+            disabled={cargando}
+            className={styles.botonGuardar}
+          >
+            {cargando ? (
+              <span className={styles.cargando}>
+                <span className={styles.spinner}></span>Procesando...
+              </span>
+            ) : modoEdicion ? (
+              "Actualizar Producto"
+            ) : (
+              "Guardar Producto"
+            )}
+          </button>
+          {modoEdicion && (
+            <button
+              type="button"
+              className={styles.botonGuardar}
+              onClick={cancelarEdicion}
+            >
+              Cancelar
+            </button>
           )}
-        </button>
+        </div>
       </form>
       {error && <p className={styles.error}>{error}</p>}
     </div>

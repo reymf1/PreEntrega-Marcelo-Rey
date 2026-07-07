@@ -6,7 +6,6 @@ import styles from "./FormularioCupon.module.css";
 export function FormularioCupon({
   datosForm,
   manejarCambio,
-  manejarCambioImagen,
   manejarEnvio,
   cargando,
   error,
@@ -15,7 +14,11 @@ export function FormularioCupon({
 }) {
   return (
     <div className={styles.contact}>
-      <h2>{modoEdicion ? "Actualizar Cupón" : "Crear Cupón"}</h2>
+      <h2>
+        {modoEdicion
+          ? "Actualizar Cupón de Descuento"
+          : "Crear Cupón de Descuento"}
+      </h2>
       <form className={styles.formulario} onSubmit={manejarEnvio}>
         <div className={styles.formulario1}>
           <label className={styles.labelText}>
