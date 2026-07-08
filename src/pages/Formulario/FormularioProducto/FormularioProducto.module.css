@@ -103,6 +103,9 @@
 }
 .botones {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 }
 .botonGuardar {
   margin-top: 3.5rem;

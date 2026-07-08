@@ -32,7 +32,7 @@ const GestionCupones = () => {
       const lista = resp.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       setCupones(lista);
     } catch (error) {
-      setError(`Error al cargar los cupones: ${error.message}`);
+      setError("Error al cargar los cupones.");
     }
   };
 
@@ -161,7 +161,7 @@ const GestionCupones = () => {
           setDatosForm(estadoInicialForm);
         }
       } catch (error) {
-        setError(`No se pudo eliminar el cupón: ${error.message}`);
+        setError(`No se pudo eliminar el cupón.`);
       }
     }
   };

@@ -9,6 +9,7 @@ import ProductoDescripcion from "./pages/Home/sections/Productos/ProductoDescrip
 import Carrito from "./pages/Carrito/Carrito";
 import GestionProductos from "./pages/GestionProductos/GestionProductos";
 import GestionCupones from "./pages/GestionCupones/GestionCupones";
+import Login from "./pages/Login/Login";
 function App() {
   return (
     <>
@@ -34,6 +35,7 @@ function App() {
           <Route path="nosotros" element={<EquipoContainer />} />
           <Route path="carrito" element={<Carrito />} />
           <Route path="admin/cupones" element={<GestionCupones />} />
+          <Route path="login" element={<Login />} />
         </Route>
       </Routes>
     </>

@@ -46,30 +46,32 @@ export function FormularioCupon({
             />
           </label>
         </div>
-        <button
-          type="submit"
-          disabled={cargando}
-          className={styles.botonGuardar}
-        >
-          {cargando ? (
-            <span className={styles.cargando}>
-              <span className={styles.spinner}></span>Procesando...
-            </span>
-          ) : modoEdicion ? (
-            "Actualizar Cupón"
-          ) : (
-            "Crear Cupón"
-          )}
-        </button>
-        {modoEdicion && (
+        <div className={styles.botones}>
           <button
-            type="button"
+            type="submit"
+            disabled={cargando}
             className={styles.botonGuardar}
-            onClick={cancelarEdicion}
           >
-            Cancelar
+            {cargando ? (
+              <span className={styles.cargando}>
+                <span className={styles.spinner}></span>Procesando...
+              </span>
+            ) : modoEdicion ? (
+              "Actualizar Cupón"
+            ) : (
+              "Crear Cupón"
+            )}
           </button>
-        )}
+          {modoEdicion && (
+            <button
+              type="button"
+              className={styles.botonGuardar}
+              onClick={cancelarEdicion}
+            >
+              Cancelar
+            </button>
+          )}
+        </div>
       </form>
       {error && <p className={styles.error}>{error}</p>}
     </div>
