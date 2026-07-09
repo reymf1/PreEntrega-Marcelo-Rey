@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import HeaderTitulo from "../../components/HeaderTitulo/HeaderTitulo";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -24,7 +25,6 @@ const Login = () => {
         password,
       );
       const user = userCredential.user;
-      console.log("Usuario logueado:", user);
       toast.success("¡Inicio de sesión exitoso!");
       navigate("/");
     } catch (error) {
@@ -33,6 +33,13 @@ const Login = () => {
   };
   return (
     <div>
+      <HeaderTitulo
+        titulo="Inicio de Sesión"
+        subtitulo="CENTRO PARA LA VIDA ESPIRITUAL"
+        variant="tituloEstrellas"
+        tituloTag="h1"
+        subtituloTag="h2"
+      />
       <h2>Iniciar Sesión</h2>
       <form onSubmit={handleLogin}>
         <input
