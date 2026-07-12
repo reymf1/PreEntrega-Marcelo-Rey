@@ -30,17 +30,15 @@ export const AuthProvider = ({ children }) => {
 
   // Función para registrar un nuevo usuario
   const signup = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(auth, email.trim(), password);
   };
 
   // Función para iniciar sesión
   const login = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email.trim(), password);
   };
   // Función para cerrar sesión
-  const logout = () => {
-    signOut(auth);
-  };
+  const logout = () => signOut(auth);
 
   //Función para manejar el cambio de usuario
   const manejarCambioDeUsuario = async (currentUser) => {
@@ -66,7 +64,7 @@ export const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, manejarCambioDeUsuario);
     // Limpiamos el observador al desmontar
     return () => unsubscribe();
-  }, [auth, db]); // Agregamos 'auth' como dependencia
+  }, [auth]); // Agregamos 'auth' como dependencia por convención, porque no cambia
 
   // Crear el objeto 'value' con TODAS las funciones definidas
   const value = {

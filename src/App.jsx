@@ -10,9 +10,16 @@ import Carrito from "./pages/Carrito/Carrito";
 import GestionProductos from "./pages/GestionProductos/GestionProductos";
 import GestionCupones from "./pages/GestionCupones/GestionCupones";
 import Login from "./pages/Login/Login";
+import Registro from "./pages/Registro/Registro";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./Styles/Toast.css";
+
 function App() {
   return (
     <>
+      <ToastContainer />
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -31,11 +38,26 @@ function App() {
             }
           />
           <Route path="producto/:id" element={<ProductoDescripcion />} />
-          <Route path="gestion" element={<GestionProductos />} />
           <Route path="nosotros" element={<EquipoContainer />} />
           <Route path="carrito" element={<Carrito />} />
-          <Route path="admin/cupones" element={<GestionCupones />} />
           <Route path="login" element={<Login />} />
+          <Route path="registro" element={<Registro />} />
+          <Route
+            path="admin/gestion"
+            element={
+              <ProtectedRoute rolesPermitidos={["admin"]}>
+                <GestionProductos />
+              </ProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="admin/cupones"
+            element={
+              <ProtectedRoute rolesPermitidos={["admin"]}>
+                <GestionCupones />
+              </ProtectedRoute>
+            }
+          ></Route>
         </Route>
       </Routes>
     </>

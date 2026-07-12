@@ -16,11 +16,11 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
 import { Boton } from "../../components/Boton/Boton";
 
+const estadoInicialForm = { codigo: "", descuento: "" };
 const GestionCupones = () => {
   const [cupones, setCupones] = useState([]);
   const [error, setError] = useState(null);
   const [cargando, setCargando] = useState(false);
-  const estadoInicialForm = { codigo: "", descuento: "" };
   const [datosForm, setDatosForm] = useState(estadoInicialForm);
   const [cuponAEditar, setCuponAEditar] = useState(null);
 
@@ -186,12 +186,17 @@ const GestionCupones = () => {
       <div className={styles.list}>
         <h2>Administrar Cupones de Descuento</h2>
         <ul className={styles.listItems}>
+          <div className={styles.listHeader}>
+            <span>Código</span>
+            <span>Descuento</span>
+            <span>Acciones</span>
+          </div>
           {cupones.map((cupon) => (
             <li key={cupon.id}>
               <div className={styles.listItemTextProd}>
                 <p>{cupon.codigo}</p>
               </div>
-              <div>
+              <div className={styles.listItemDescuento}>
                 <p>%{cupon.descuento}</p>
               </div>
               <div className={styles.listBotones}>
@@ -208,6 +213,7 @@ const GestionCupones = () => {
             </li>
           ))}
         </ul>
+        {error && <p className={styles.error}>{error}</p>}
       </div>
     </>
   );

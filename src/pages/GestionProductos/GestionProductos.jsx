@@ -215,6 +215,12 @@ const GestionProductos = () => {
       <div className={styles.list}>
         <h2>Administrar Productos</h2>
         <ul className={styles.listItems}>
+          <div className={styles.listHeader}>
+            <span>Imagen</span>
+            <span>Producto</span>
+            <span>Precio</span>
+            <span>Acciones</span>
+          </div>
           {productos.map((prod) => (
             <li key={prod.id}>
               <div className={styles.listItemImg}>
@@ -223,7 +229,7 @@ const GestionProductos = () => {
               <div className={styles.listItemTextProd}>
                 <p>{prod.nombre}</p>
               </div>
-              <div>
+              <div className={styles.listItemPrecio}>
                 <p>${prod.precio}</p>
               </div>
               <div className={styles.listBotones}>
@@ -237,6 +243,7 @@ const GestionProductos = () => {
             </li>
           ))}
         </ul>
+        {error && <p className={styles.error}>{error}</p>}
       </div>
     </>
   );

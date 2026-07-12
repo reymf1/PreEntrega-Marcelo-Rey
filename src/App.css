@@ -1,1 +1,22 @@
+.Toastify__toast {
+  border-radius: 14px;
+  font-size: 0.95rem;
+}
 
+.Toastify__toast--success {
+  background: linear-gradient(
+    135deg,
+    #7bbf8a,
+    #5fa96b
+  );
+  color: white;
+}
+
+.Toastify__toast--error {
+  background: linear-gradient(
+    135deg,
+    #d98b8b,
+    #c45d5d
+  );
+  color: white;
+}

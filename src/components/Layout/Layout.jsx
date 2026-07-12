@@ -9,7 +9,7 @@ import styles from "./Layout.module.css";
 export function Layout() {
   const { isCartOpen, closeCart } = useCart();
   return (
-    <div>
+    <div className={styles.layout}>
       <Header />
       <main>
         <Outlet />

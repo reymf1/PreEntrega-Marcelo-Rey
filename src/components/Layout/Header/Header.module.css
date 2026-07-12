@@ -1,4 +1,5 @@
-.headerNav {
+.headerDesktopNav,
+.headerMobileNav {
   background: linear-gradient(
     to right,
     rgba(185, 190, 189, 0.8),
@@ -8,29 +9,121 @@
     rgb(215, 200, 224),
     rgba(185, 190, 189, 0.8)
   );
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 10;
+}
+.headerDesktopNav {
   display: flex;
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 10;
 }
-.headerNavList {
+.headerMobileNav {
+  display: none;
+}
+.mobileMenu {
+  display: none;
+}
+.MenuBtn {
+  display: none;
+  top: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 30;
+}
+.iconMenu,
+.iconClose {
+  filter: contrast(30%);
+}
+.headerDesktopNavList {
   display: flex;
   flex-wrap: wrap;
   list-style: none;
   gap: 2.5rem;
   justify-content: center;
 }
-.headerNavList a {
-  font-family: "Montserrat", sans-serif;
+.headerDesktopNavList a {
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 600;
   color: #696868;
+}
+.headerNavItemMenu {
+  position: relative; /*Para posicionar el submenu con position absolute*/
+}
+.headerNavItemMenu span {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #696868;
+}
+.headerNavItemMenu img {
+  margin-left: 0.625rem;
+  transition: transform 0.2s ease-in-out;
+}
+.headerNavItemMenu:hover img {
+  transform: rotate(180deg);
+}
+.headerNavItemMenuSubmenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 12.5rem; /* mínimo ancho legible */
+  width: auto; /* se adapta al contenido */
+  white-space: nowrap; /* evita salto de línea */
+  border-radius: 0.625rem;
+  background-color: rgb(222, 215, 238);
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+  display: none;
+  z-index: 1;
+}
+.headerNavItemMenuSubmenu li {
+  padding: 0.625rem 0.625rem;
+  list-style: none;
+}
+.headerNavItemMenuSubmenu button {
+  width: 100%;
+  padding: 0 0.625rem;
+  background: transparent;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #a26eaf;
+  text-align: left;
+  list-style: none;
+  cursor: pointer;
+  /*margin: 1.25rem 1.875rem 1.25rem 0.625rem;*/
+}
+.headerNavItemMenuSubmenu a {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #a26eaf;
+  margin: 1.25rem 1.875rem 1.25rem 0.625rem;
+}
+.headerNavItemMenuSubmenu li:not(:last-child) {
+  border-bottom: 1px solid #cac4c4;
+}
+.headerNavItemMenu:hover > .headerNavItemMenuSubmenu {
+  display: block;
+}
+.headerNavItemMenuSubmenu li:hover {
+  background-color: #ffffff;
+}
+.headerNavItemMenuSubmenu li:hover:first-child {
+  background-color: #ffffff;
+  border-radius: 10px 10px 0 0;
+}
+.headerNavItemMenuSubmenu li:hover:last-child {
+  background-color: #ffffff;
+  border-radius: 0 0 10px 10px;
+}
+.headerNavItemMenuSubmenu li:hover a,
+.headerNavItemMenuSubmenu li:hover button {
+  background-color: #ffffff;
+  color: #68a8c4;
 }
 .headerNavCarrito {
   position: relative;
@@ -56,3 +149,151 @@
   font-weight: 300;
   color: #ffffff;
 }
+
+@media screen and (max-width: 768px) {
+  .headerDesktopNav {
+    display: none;
+  }
+  .MenuBtn {
+    display: block;
+    justify-self: start;
+  }
+  .headerMobileNav {
+    display: grid;
+    grid-template-columns: 48px 1fr 48px;
+    align-items: center;
+    padding: 0 1.5rem;
+  }
+  .headerNav1Logo {
+    justify-self: center;
+  }
+  .headerNavCarrito {
+    justify-self: end;
+  }
+  .mobileMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+      to bottom,
+      rgba(185, 190, 189),
+      rgb(215, 200, 224),
+      rgb(215, 200, 224),
+      rgb(215, 200, 224),
+      rgb(215, 200, 224),
+      rgba(185, 190, 189)
+    );
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 5rem;
+    align-items: center;
+    flex-direction: column;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 20;
+  }
+  .open {
+    transform: translateX(0);
+  }
+  .logo{
+    padding-bottom: 5rem;
+  }
+  .MobileMenuList {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    align-items: center;
+    list-style: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #696868;
+  }
+  .MobileMenuList a {
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #696868;
+  }
+
+  .closeBtn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+  .headerNavItemMenuSubmenu {
+    position: static;
+    display: none;
+    background-color: rgb(222, 215, 238);
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: none;
+    width: auto;
+  }
+  .submenuOpen {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5rem;
+  }
+  .headerNavItemMenu:hover > .headerNavItemMenuSubmenu:not(.submenuOpen) {
+    display: none;
+  }
+  .mobileUser {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .flechaAbierta {
+    transform: rotate(180deg);
+  }
+}
+/*.headerNav {
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 20;
+    transform: translateX(-100%); /* oculto a la izquierda */
+/*  transition: transform 0.3s ease-in-out;
+  }*/
+/*.headerNavList {
+    flex-direction: column;
+    height: 100vh;
+  }
+  .active {
+    transform: translateX(0); /* visible al abrir */
+/*  }
+  .headerNav1 {
+    display: grid;
+    z-index: 10;
+  }
+  .headerNavMenuBtn {
+    display: block;
+    justify-self: start;
+    z-index: 30;
+  }
+  .headerNav1Logo {
+    justify-self: center;
+  }
+  .headerNavCarrito {
+    justify-self: end;
+  }
+}*/
+
+/*@media screen and (max-width: 600px) {
+  
+  .headerNav {
+    display: none;
+  }
+  .headerNav1 {
+  display: flex;
+
+.headerNav1Logo {
+    scale: 0.8;
+  }}
+  .headerNavMenuBtn .iconMenu {
+    display: block;
+  }
+}*/

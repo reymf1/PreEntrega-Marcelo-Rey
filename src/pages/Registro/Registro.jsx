@@ -1,36 +1,60 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import HeaderTitulo from "../../components/HeaderTitulo/HeaderTitulo";
-import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import styles from "./Login.module.css";
+import { toast } from "react-toastify";
+import styles from "./Registro.module.css";
 
-const Login = () => {
+const Registro = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const [error, setError] = useState(null);
-  const { login } = useAuth();
   const [cargando, setCargando] = useState(false);
+  const navigate = useNavigate();
+  const { signup } = useAuth();
 
-  const manejarLogin = async (e) => {
+  const manejarEnvio = async (e) => {
     e.preventDefault();
-    setError(null);
+    setError(null); // Reseteamos cualquier error previo
 
     if (!email.trim() || !password.trim()) {
       setError("Complete todos los campos.");
       return;
     }
+
+    if (password.length < 6) {
+      setError("La contraseña debe tener al menos 6 caracteres.");
+      return;
+    }
     setCargando(true);
     try {
-      await login(email, password);
-      toast.success("¡Inicio de sesión exitoso!");
+      // Intentamos crear el nuevo usuario en Firebase
+      await signup(email, password);
+      toast.success("Usuario registrado correctamente.");
+      // Si la creación es exitosa, lo redirigimos al inicio
+      // Firebase ya gestiona el estado de sesión automáticamente
       navigate("/");
     } catch (error) {
+      // Aquí es donde manejamos el caso específico que nos interesa
       switch (error.code) {
+        case "auth/email-already-in-use": {
+          const quiereLoguearse = window.confirm(
+            "Este correo electrónico ya está registrado. ¿Desea intentar iniciar sesión?",
+          );
+          if (quiereLoguearse) {
+            navigate("/login");
+          } else {
+            navigate("/");
+          }
+          break;
+        }
+
         case "auth/weak-password":
           setError("La contraseña debe tener al menos 6 caracteres.");
+          break;
+
+        case "auth/invalid-email":
+          setError("El correo electrónico es inválido.");
           break;
 
         default:
@@ -46,24 +70,25 @@ const Login = () => {
   return (
     <div>
       <HeaderTitulo
-        titulo="Inicio de Sesión"
+        titulo="Registro de Datos"
         subtitulo="CENTRO PARA LA VIDA ESPIRITUAL"
         variant="tituloEstrellas"
         tituloTag="h1"
         subtituloTag="h2"
       />
       <div className={styles.contact}>
-        <h2>Iniciar Sesión</h2>
-        <form className={styles.formulario} onSubmit={manejarLogin}>
+        <h2>Crear una nueva cuenta</h2>
+        <form className={styles.formulario} onSubmit={manejarEnvio}>
           <div className={styles.inputs}>
             <label className={styles.labelText}>
               Correo Electrónico
               <input
                 className={styles.inputText}
                 type="email"
-                placeholder="juanperez@gmail.com"
                 value={email}
+                placeholder="juanperez@gmail.com"
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </label>
             <label className={styles.labelText}>
@@ -71,9 +96,10 @@ const Login = () => {
               <input
                 className={styles.inputText}
                 type="password"
-                placeholder="Contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="Mínimo 6 caracteres"
               />
             </label>
           </div>
@@ -85,23 +111,17 @@ const Login = () => {
             >
               {cargando ? (
                 <span className={styles.cargando}>
-                  <span className={styles.spinner}></span>Ingresando...
+                  <span className={styles.spinner}></span>Registrando...
                 </span>
               ) : (
-                "Ingresar"
+                "Registrarse"
               )}
             </button>
-            <p>
-              ¿No tenés una cuenta?{" "}
-              <Link className={styles.linkRegistro} to="/registro">
-                Registrate aquí
-              </Link>
-            </p>
           </div>
         </form>
-        {error && <p>{error}</p>}
+        {error && <p className={styles.error}>{error}</p>}
       </div>
     </div>
   );
 };
-export default Login;
+export default Registro;

@@ -63,9 +63,14 @@ export function ProductosContainer({
         tituloTag={tituloTag}
         subtituloTag={subtituloTag}
       />
-      {cargando && <p>Cargando productos, por favor espere...</p>}
-      {/*Lopongo en el return porque si hay error o está cargando aparece el título aparece*/}
-      {error && <p>Error: {error}</p>}
+      {cargando && (
+        <span className={styles.cargando}>
+          <span className={styles.spinner}></span>Cargando productos, por favor
+          espere...
+        </span>
+      )}
+      {/*Lo pongo en el return porque si hay error o está cargando aparece el título aparece*/}
+      {error && <p className={styles.error}>Error: {error}</p>}
       {!cargando && !error && <ProductosList productos={productosAMostrar} />}
     </>
   );

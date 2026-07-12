@@ -1,1 +1,28 @@
+/*Para alinear el spinner con el texto*/
+.cargando {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.57rem;
+  letter-spacing: 0.0625rem;
+  color: #696868;
+  padding: 1rem;
+}
+.spinner {
+  display: inline-block; /*Por defecto es inline entre span y no respeta height y width, por eso pongo inline-bloc*/
+  width: 18px;
+  height: 18px;
+  border: 3px solid #a26eaf;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
 
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}

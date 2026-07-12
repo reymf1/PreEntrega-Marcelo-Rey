@@ -43,7 +43,11 @@ export function EquipoContainer() {
         tituloTag="h1"
         subtituloTag="h2"
       />
-      {cargando && <p>Cargando información del equipo, por favor espere...</p>}
+      {cargando && (
+        <span className={styles.cargando}>
+          <span className={styles.spinner}></span>Cargando información del equipo, por favor espere...
+        </span>
+      )}
       {error && <p>Error: {error}</p>}
       {!cargando && !error && <ContactoList contactos={contactos} />}
     </>
