@@ -195,3 +195,14 @@
 .totalValor {
   color: #a26eaf;
 }
+
+
+@media screen and (max-width: 1024px){
+  .cart, .cartEmpty {
+    width: 40vw;
+    z-index: 100;
+  }
+  .header h2 {
+    font-size: 1.1rem;
+  }
+}

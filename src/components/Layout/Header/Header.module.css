@@ -150,6 +150,7 @@
   color: #ffffff;
 }
 
+
 @media screen and (max-width: 768px) {
   .headerDesktopNav {
     display: none;
