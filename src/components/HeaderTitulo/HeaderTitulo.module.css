@@ -66,4 +66,26 @@
   letter-spacing: 0.18rem;
   color: #696868;
   margin-top: 1.25rem;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .tituloEstrellas h1 {
+    text-align: center;
+    align-items: center;
+    /*padding-top: 6.25rem;*/
+    font-weight: 400;
+    font-size: 2.65rem;
+    letter-spacing: 0.32rem;
+    color: #a26eaf;
+  }
+  .tituloEstrellas h2 {
+    font-family: "Playfair Display", serif;
+    font-weight: 300;
+    font-size: 1.59rem;
+    letter-spacing: 0.15rem;
+    color: #696868;
+    margin-top: 1.25rem;
+    text-align: center;
+  }
 }

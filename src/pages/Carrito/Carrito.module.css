@@ -196,10 +196,32 @@
   color: #a26eaf;
 }
 
+@media screen and (max-width: 1024px) {
+  .cart,
+  .cartEmpty {
+    min-width: 40vw;
+    z-index: 100;
+  }
+  .header h2 {
+    font-size: 1.1rem;
+  }
+}
 
-@media screen and (max-width: 1024px){
-  .cart, .cartEmpty {
-    width: 40vw;
+@media screen and (max-width: 768px) {
+  .cart,
+  .cartEmpty {
+    min-width: 60vw;
+    z-index: 100;
+  }
+  .header h2 {
+    font-size: 1.1rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .cart,
+  .cartEmpty {
+    min-width: 100vw;
     z-index: 100;
   }
   .header h2 {

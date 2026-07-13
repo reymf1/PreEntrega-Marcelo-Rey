@@ -33,7 +33,7 @@ function Header() {
           <li>
             <Link to="/nosotros">NOSOTROS</Link>
           </li>
-          <li>
+          {/*<li>
             <Link to="/acercaDeMi">ACERCA DE MI</Link>
           </li>
           <li>
@@ -41,7 +41,7 @@ function Header() {
           </li>
           <li>
             <Link to="/contacto">CONTACTO</Link>
-          </li>
+          </li>*/}
           {/* Lógica de renderizado condicional */}
           {user ? (
             <>
@@ -141,7 +141,11 @@ function Header() {
         </button>
         <HashLink to="/#inicio" onClick={() => setMenuAbierto(false)}>
           {/*Pongo esto en lugar de link porque permite navegar a un id específico dentro de una página usando hashes*/}
-          <img className={styles.logo} src="/images/LogoYoga3.png" alt="Logo Yoga" />
+          <img
+            className={styles.logo}
+            src="/images/LogoYoga3.png"
+            alt="Logo Yoga"
+          />
         </HashLink>
         <ul className={styles.MobileMenuList}>
           <li>
@@ -164,7 +168,7 @@ function Header() {
               NOSOTROS
             </Link>
           </li>
-          <li>
+          {/*<li>
             <Link to="/acercaDeMi" onClick={() => setMenuAbierto(false)}>
               ACERCA DE MI
             </Link>
@@ -178,7 +182,7 @@ function Header() {
             <Link to="/contacto" onClick={() => setMenuAbierto(false)}>
               CONTACTO
             </Link>
-          </li>
+          </li>*/}
           {/* Lógica de renderizado condicional */}
           {user ? (
             <>
