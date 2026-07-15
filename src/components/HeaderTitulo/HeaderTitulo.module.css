@@ -1,9 +1,4 @@
-/*#productos {
-  scroll-margin-top: 3.39rem; /*la barra de navegación mide 54.27px. Este es el espacio que deja para que la sección "productos" se posicione a continuación del la brra de navegación, ya que al tener position: fixed no ocupa lugar y la sección "servicios" quedaría tapada (el título)*/
-/*}*/
 .tituloh2 {
-  /*scroll-margin-top: 6.0625rem; /*la barra de navegación mide 54.27px. Este es el espacio que deja para que la sección "productos" se posicione a continuación del la brra de navegación, ya que al tener position: fixed no ocupa lugar y la sección "servicios" quedaría tapada (el título)*/
-  width: 100%;
   height: 11.25rem;
   background: linear-gradient(
     to right,
@@ -70,22 +65,37 @@
 }
 
 @media screen and (max-width: 768px) {
+  .tituloh2 h2 {
+    font-size: 2.65rem;
+    letter-spacing: 0.318rem;
+  }
+  .tituloh2 P {
+    font-size: 1.328rem;
+  }
   .tituloEstrellas h1 {
-    text-align: center;
-    align-items: center;
-    /*padding-top: 6.25rem;*/
-    font-weight: 400;
     font-size: 2.65rem;
     letter-spacing: 0.32rem;
-    color: #a26eaf;
   }
   .tituloEstrellas h2 {
-    font-family: "Playfair Display", serif;
-    font-weight: 300;
     font-size: 1.59rem;
     letter-spacing: 0.15rem;
-    color: #696868;
-    margin-top: 1.25rem;
-    text-align: center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .tituloh2 h2 {
+    font-size: 2.5rem;
+    letter-spacing: 0.3rem;
+  }
+  .tituloh2 P {
+    font-size: 1.25rem;
+  }
+  .tituloEstrellas h1 {
+    font-size: 2.5rem;
+    letter-spacing: 0.3rem;
+  }
+  .tituloEstrellas h2 {
+    font-size: 1.5rem;
+    letter-spacing: 0.14rem;
   }
 }
