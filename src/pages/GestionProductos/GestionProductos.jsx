@@ -29,7 +29,8 @@ const GestionProductos = () => {
   };
   const [datosForm, setDatosForm] = useState(estadoInicialForm);
   const [imagenFile, setImagenFile] = useState(null);
-  const [error, setError] = useState(null);
+  const [errorFormulario, setErrorFormulario] = useState(null);
+  const [errorLista, setErrorLista] = useState(null);
   const [cargando, setCargando] = useState(false);
   const inputFileRef = useRef(null); //Uso useRef para hacer referencia al input type=file para limpiar la pantalla una vez cargada la imágen
   const [productos, setProductos] = useState([]);
@@ -42,7 +43,7 @@ const GestionProductos = () => {
       const resp = await getDocs(productosRef);
       setProductos(resp.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     } catch (error) {
-      setError("Error al cargar los productos.");
+      setErrorLista("Error al cargar los productos.");
     }
   };
   useEffect(() => {
@@ -92,13 +93,14 @@ const GestionProductos = () => {
           setDatosForm(estadoInicialForm);
         }
       } catch (error) {
-        setError("No se pudo eliminar el producto.");
+        setErrorLista("No se pudo eliminar el producto.");
       }
     }
   };
 
   //Función para manejar un cambio en los input
   const manejarCambio = (evento) => {
+    setErrorFormulario(null);
     const { name, value, type, checked } = evento.target;
     setDatosForm((prev) => ({
       ...prev,
@@ -108,6 +110,7 @@ const GestionProductos = () => {
 
   // Función para manejar el cambio del input de tipo "file"
   const manejarCambioImagen = (evento) => {
+    setErrorFormulario(null);
     setImagenFile(evento.target.files[0]);
   };
 
@@ -115,10 +118,10 @@ const GestionProductos = () => {
   const manejarEnvio = async (evento) => {
     evento.preventDefault(); //Evita recargar la pantalla
     //console.log("Enviando los siguientes datos a la API:", datosForm);
-    setError(null);
+    setErrorFormulario(null);
     // Validamos que el usuario haya seleccionado una imagen
     if (!imagenFile && !productoAEditar) {
-      setError("Por favor, selecciona una imagen para el producto.");
+      setErrorFormulario("Por favor, selecciona una imagen para el producto.");
       return;
     }
     setCargando(true);
@@ -163,7 +166,7 @@ const GestionProductos = () => {
       //Reset de productoAEditar
       setProductoAEditar(null);
     } catch (error) {
-      setError("No se pudo guardar el producto.");
+      setErrorFormulario("No se pudo guardar el producto.");
     } finally {
       setCargando(false);
     }
@@ -186,6 +189,7 @@ const GestionProductos = () => {
     setProductoAEditar(null);
     setDatosForm(estadoInicialForm);
     setImagenFile(null);
+    setErrorFormulario(null);
 
     if (inputFileRef.current) {
       inputFileRef.current.value = "";
@@ -207,11 +211,15 @@ const GestionProductos = () => {
         manejarCambioImagen={manejarCambioImagen}
         manejarEnvio={manejarEnvio}
         cargando={cargando}
-        error={error}
+        error={errorFormulario}
         inputFileRef={inputFileRef}
         modoEdicion={modoEdicion}
         cancelarEdicion={cancelarEdicion}
       />
+      {errorFormulario && (
+        <p className={styles.errorFormulario}>{errorFormulario}</p>
+      )}
+
       <div className={styles.list}>
         <h2>Administrar Productos</h2>
         <ul className={styles.listItems}>
@@ -243,7 +251,7 @@ const GestionProductos = () => {
             </li>
           ))}
         </ul>
-        {error && <p className={styles.error}>{error}</p>}
+        {errorLista && <p className={styles.errorLista}>{errorLista}</p>}
       </div>
     </>
   );
