@@ -67,7 +67,7 @@ function Header() {
             </>
           ) : (
             <li>
-              <Link to="/login">INICIAR SESIÓN</Link>
+              <Link to="/login">INGRESAR</Link>
             </li>
           )}
           <li className={styles.headerNavCarrito}>
@@ -80,7 +80,7 @@ function Header() {
               src="/images/carritoDeCompras.png"
               alt="Carrito de Compras"
             />
-            {totalItems >= 0 && (
+            {totalItems > 0 && (
               <span className={styles.headerNavCarritoContador}>
                 {totalItems}
               </span>
@@ -110,7 +110,7 @@ function Header() {
             src="/images/carritoDeCompras.png"
             alt="Carrito de Compras"
           />
-          {totalItems >= 0 && (
+          {totalItems > 0 && (
             <span className={styles.headerNavCarritoContador}>
               {totalItems}
             </span>
@@ -252,7 +252,7 @@ function Header() {
               src="/images/carritoDeCompras.png"
               alt="Carrito de Compras"
             />
-            {totalItems >= 0 && (
+            {totalItems > 0 && (
               <span className={styles.headerNavCarritoContador}>
                 {totalItems}
               </span>

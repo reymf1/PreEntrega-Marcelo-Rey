@@ -1,23 +1,31 @@
-.header__estrellas {
-  background: linear-gradient(rgb(223, 236, 232, 0.9), rgb(223, 236, 232, 0.6), rgba(229, 215, 239, 0.5), rgba(229, 215, 239, 0.5), rgba(229, 215, 239, 0.5), rgb(223, 236, 232, 0.7)), url(/images/estrellas2.jpeg) center / cover;
+.headerEstrellas {
+  background:
+    linear-gradient(
+      rgb(223, 236, 232, 0.9),
+      rgb(223, 236, 232, 0.6),
+      rgba(229, 215, 239, 0.5),
+      rgba(229, 215, 239, 0.5),
+      rgba(229, 215, 239, 0.5),
+      rgb(223, 236, 232, 0.7)
+    ),
+    url(/images/estrellas2.jpeg) center / cover;
   height: 100vh;
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-top: 5rem;
 }
-.header__titulo {
+.headerTitulo {
   text-align: center;
 }
-.header__titulo h1 {
-  font-family: "Montserrat", sans-serif;
+.headerTitulo h1 {
   font-weight: 400;
   font-size: 4rem;
   letter-spacing: 0.375rem;
   color: #696868;
 }
-.header__titulo h2 {
+.headerTitulo h2 {
   font-family: "Playfair Display", serif;
   font-weight: 300;
   font-size: 2rem;
@@ -25,16 +33,59 @@
   color: #696868;
   margin-top: 2.5rem;
 }
-.header__simbolos{
+.headerSimbolos {
   margin-top: 6.25rem;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 6.25rem;
 }
-.header__simbolos1 {
-  /*border: 1px solid transparent;*/
+.headerSimbolos1 {
   border-radius: 50%;
   padding: 1.125rem;
   background-color: #e0caf1;
+}
+
+@media screen and (max-width: 768px) {
+  .headerEstrellas {
+    padding-top: 4rem;
+  }
+  .headerTitulo h1 {
+    font-size: 3.4rem;
+    letter-spacing: 0.318rem;
+  }
+  .headerTitulo h2 {
+    font-size: 1.7rem;
+    letter-spacing: 0.318rem;
+  }
+  .headerSimbolos {
+    margin-top: 5rem;
+    gap: 5rem;
+  }
+  .headerSimbolos1 {
+    padding: 0.95rem;
+    scale: 0.8;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .headerEstrellas {
+    padding-top: 3rem;
+  }
+  .headerTitulo h1 {
+    font-size: 3.2rem;
+    letter-spacing: 0.3rem;
+  }
+  .headerTitulo h2 {
+    font-size: 1.6rem;
+    letter-spacing: 0.3rem;
+  }
+  .headerSimbolos {
+    margin-top: 4.5rem;
+    gap: 4.5rem;
+  }
+  .headerSimbolos1 {
+    padding: 0.9rem;
+    scale: 0.7;
+  }
 }
