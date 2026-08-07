@@ -20,6 +20,7 @@ function App() {
   return (
     <>
       <ToastContainer />
+      {/*Es el lugar donde se visualizan todas las notificaciones. Sirve para mostrar en pantalla las notificaciones creadas con React Toastify*/}
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>
