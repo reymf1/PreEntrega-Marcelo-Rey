@@ -110,7 +110,7 @@ const ProductoDescripcion = () => {
               className={styles.descripcion}
               dangerouslySetInnerHTML={{ __html: descripcion }}
             />
-            {/*Convierte el contenido de descripcion del json en html dentro de un div*/}
+            {/*Convierte el contenido de descripcion en html dentro de un div*/}
           </div>
           <div className={styles.botones1}>
             <HashLink
