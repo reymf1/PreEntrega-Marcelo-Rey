@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react"; //Uso useRef para hacer referencia al input type=file para limpiar la pantalla una vez cargada la imágen
 import { db } from "../../firebase/config";
 import { FormularioProducto } from "../Formulario/FormularioProducto/FormularioProducto";
 import {
@@ -14,7 +14,6 @@ import styles from "./GestionProductos.module.css";
 import { Boton } from "../../components/Boton/Boton";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEdit } from "react-icons/ai";
-import { useRef } from "react"; //Uso useRef para hacer referencia al input type=file para limpiar la pantalla una vez cargada la imágen
 import { toast } from "react-toastify"; //Para usar notificaciones en lugar de alert
 
 const GestionProductos = () => {
@@ -43,7 +42,10 @@ const GestionProductos = () => {
       const resp = await getDocs(productosRef);
       setProductos(resp.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     } catch (error) {
+      console.error(error);
       setErrorLista("Error al cargar los productos.");
+    } finally {
+      setCargando(false);
     }
   };
   useEffect(() => {
@@ -93,6 +95,7 @@ const GestionProductos = () => {
           setDatosForm(estadoInicialForm);
         }
       } catch (error) {
+        console.error(error);
         setErrorLista("No se pudo eliminar el producto.");
       }
     }
@@ -166,6 +169,7 @@ const GestionProductos = () => {
       //Reset de productoAEditar
       setProductoAEditar(null);
     } catch (error) {
+      console.error(error);
       setErrorFormulario("No se pudo guardar el producto.");
     } finally {
       setCargando(false);

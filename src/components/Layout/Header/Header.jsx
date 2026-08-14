@@ -42,6 +42,7 @@ function Header() {
           <li>
             <Link to="/contacto">CONTACTO</Link>
           </li>*/}
+
           {/* Lógica de renderizado condicional */}
           {user ? (
             <>
