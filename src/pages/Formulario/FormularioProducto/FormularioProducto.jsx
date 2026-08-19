@@ -1,5 +1,4 @@
 // En src/componentens/FormularioProducto/FormularioProducto
-import React from "react";
 import styles from "./FormularioProducto.module.css";
 
 // Por ahora, es un componente súper simple. Solo muestra el HTML.

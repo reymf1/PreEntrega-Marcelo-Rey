@@ -38,6 +38,8 @@ const GestionProductos = () => {
   //Función para cargar los productos de Firestore
   const cargarProductos = async () => {
     try {
+      setCargando(true);
+      setErrorLista(null);
       const productosRef = collection(db, "productos");
       const resp = await getDocs(productosRef);
       setProductos(resp.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -49,6 +51,7 @@ const GestionProductos = () => {
     }
   };
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     cargarProductos();
   }, []);
 
