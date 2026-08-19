@@ -1,4 +1,4 @@
-import React, { useState, useContext, createContext } from "react"; //useState → para guardar y actualizar el carrito. useContext → para poder consumir el contexto desde los componentes. createContext → para crear el contexto.
+import { useState, useContext, createContext } from "react"; //useState → para guardar y actualizar el carrito. useContext → para poder consumir el contexto desde los componentes. createContext → para crear el contexto.
 
 export const CartContext = createContext(); //Creamos el contexto
 
