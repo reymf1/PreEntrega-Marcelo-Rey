@@ -1,5 +1,19 @@
-import { useState } from "react"; //useState → para guardar y actualizar el carrito. useContext → para poder consumir el contexto desde los componentes. createContext → para crear el contexto.
-import { CartContext } from "./CartContext";
+import { useState, useContext,createContext } from "react"; //useState → para guardar y actualizar el carrito. useContext → para poder consumir el contexto desde los componentes. createContext → para crear el contexto.
+
+
+//Creamos el contexto
+// eslint-disable-next-line react-refresh/only-export-components
+export const CartContext = createContext(); 
+
+//Custom Hook usecCart(). Es una Hook personalizada (la creo yo)
+// eslint-disable-next-line react-refresh/only-export-components
+export const useCart = () => {
+  const context = useContext(CartContext); //Consumo del contexto
+  if (!context) {
+    throw new Error("useCart debe ser usado dentro de un CartProvider");
+  }
+  return context;
+};
 
 //CartProvider es el proveedor del estado del carrito
 export const CartProvider = ({ children }) => {

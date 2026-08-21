@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ProductosList } from "../ProductosList/ProductosList";
 import HeaderTitulo from "../../../../../components/HeaderTitulo/HeaderTitulo";
 import styles from "./ProductosContainer.module.css";

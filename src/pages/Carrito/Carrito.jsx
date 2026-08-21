@@ -1,5 +1,4 @@
 // src/componentes/Cart/Cart.jsx
-import React from "react";
 import styles from "./Carrito.module.css";
 import { useCart } from "../../context/CartContext";
 import { Link } from "react-router-dom";
